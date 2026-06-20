@@ -1,0 +1,5816 @@
+{
+  "config": {
+    "d_model": 128,
+    "per_class_cap": 2500,
+    "n": 4960
+  },
+  "baselines": {
+    "raw_meanpool": {
+      "tech": {
+        "acc_mean": 0.9379032258064516,
+        "acc_se": 0.004944656640496264,
+        "balanced_acc_mean": 0.9380121152544374,
+        "balanced_acc_se": 0.0049277268823316065,
+        "chance": 0.5038306451612903,
+        "balanced_chance": 0.5,
+        "n": 4960,
+        "n_classes": 2,
+        "probe_kind": "linear"
+      },
+      "biome": {
+        "acc_mean": 0.8594308012045637,
+        "acc_se": 0.006146955270165961,
+        "balanced_acc_mean": 0.7927587843232028,
+        "balanced_acc_se": 0.023340165129611918,
+        "chance": 0.5324963072378139,
+        "balanced_chance": 0.125,
+        "n": 4062,
+        "n_classes": 8,
+        "probe_kind": "linear"
+      }
+    }
+  },
+  "runs": [
+    {
+      "n_samples": 4960,
+      "per_class_cap": 2500,
+      "strategy_counts": {
+        "amplicon": 2461,
+        "wgs": 2499
+      },
+      "n_with_biome": 4062,
+      "biome_counts": {
+        "feces": 313,
+        "gut": 2163,
+        "oral": 10,
+        "plant": 141,
+        "skin": 151,
+        "soil": 374,
+        "stool": 1,
+        "water": 909
+      },
+      "confounding": {
+        "n_with_both": 4102,
+        "crosstab_strat_x_biome": {
+          "amplicon": {
+            "feces": 123,
+            "gut": 696,
+            "oral": 10,
+            "plant": 148,
+            "skin": 13,
+            "soil": 295,
+            "stool": 1,
+            "water": 619
+          },
+          "wgs": {
+            "feces": 190,
+            "gut": 1473,
+            "oral": 0,
+            "plant": 6,
+            "skin": 138,
+            "soil": 98,
+            "stool": 0,
+            "water": 292
+          }
+        },
+        "nmi_tech_biome": 0.09545563191878492,
+        "predict_biome_from_tech": {
+          "acc_mean": 0.5287665250586733,
+          "acc_se": 0.00023016699613778315,
+          "balanced_acc_mean": 0.1392857142857143,
+          "balanced_acc_se": 0.0035714285714285696,
+          "chance": 0.5287664553876158,
+          "balanced_chance": 0.125,
+          "n": 4102,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "predict_tech_from_biome": {
+          "acc_mean": 0.7006304031371616,
+          "acc_se": 0.007831966645730853,
+          "balanced_acc_mean": 0.6915087420217638,
+          "balanced_acc_se": 0.00824982258170542,
+          "chance": 0.5355923939541687,
+          "balanced_chance": 0.5,
+          "n": 4102,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "note": "NMI\u22480 and both directional probes\u2248chance => tech and biome are separable, invariance is well-posed. High NMI / high directional acc => confounded, so perfect tech-invariance is IMPOSSIBLE without losing biome (the ceiling)."
+      },
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9594758064516128,
+          "acc_se": 0.002263099225871346,
+          "balanced_acc_mean": 0.9594722099817306,
+          "balanced_acc_se": 0.002256801780649738,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.896774193548387,
+          "acc_se": 0.0014112903225806477,
+          "balanced_acc_mean": 0.896899370964426,
+          "balanced_acc_se": 0.0013938798215780911,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9379032258064516,
+          "acc_se": 0.004944656640496264,
+          "balanced_acc_mean": 0.9380121152544374,
+          "balanced_acc_se": 0.0049277268823316065,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8579511509400808,
+          "acc_se": 0.003062401795151314,
+          "balanced_acc_mean": 0.8054361416257304,
+          "balanced_acc_se": 0.025835971343171008,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8355482643496386,
+          "acc_se": 0.0056542634183144895,
+          "balanced_acc_mean": 0.741043053792634,
+          "balanced_acc_se": 0.036447164309001204,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8601697174607214,
+          "acc_se": 0.006483497030432842,
+          "balanced_acc_mean": 0.7937392661216569,
+          "balanced_acc_se": 0.023639362681230625,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9788306451612904,
+          "acc_se": 0.0005521396749044059,
+          "balanced_acc_mean": 0.9788224897824144,
+          "balanced_acc_se": 0.0005633710627452987,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.9538306451612903,
+          "acc_se": 0.003113597824895261,
+          "balanced_acc_mean": 0.9538656936095513,
+          "balanced_acc_se": 0.003107427525223956,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9530241935483872,
+          "acc_se": 0.0051163619114715795,
+          "balanced_acc_mean": 0.9530392765477854,
+          "balanced_acc_se": 0.005123787898658011,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8887244833039464,
+          "acc_se": 0.004395679457955399,
+          "balanced_acc_mean": 0.8612865021870213,
+          "balanced_acc_se": 0.02264546792962676,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8601712322541945,
+          "acc_se": 0.003868728954527396,
+          "balanced_acc_mean": 0.7686274203644515,
+          "balanced_acc_se": 0.027050360101133347,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8623876780639728,
+          "acc_se": 0.005943037914303111,
+          "balanced_acc_mean": 0.7916513322826371,
+          "balanced_acc_se": 0.0304811044508882,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 0.3,
+        "seed": 4,
+        "tag": "techinv_vicreg_c0p3_s4"
+      }
+    },
+    {
+      "n_samples": 4960,
+      "per_class_cap": 2500,
+      "strategy_counts": {
+        "amplicon": 2461,
+        "wgs": 2499
+      },
+      "n_with_biome": 4062,
+      "biome_counts": {
+        "feces": 313,
+        "gut": 2163,
+        "oral": 10,
+        "plant": 141,
+        "skin": 151,
+        "soil": 374,
+        "stool": 1,
+        "water": 909
+      },
+      "confounding": {
+        "n_with_both": 4102,
+        "crosstab_strat_x_biome": {
+          "amplicon": {
+            "feces": 123,
+            "gut": 696,
+            "oral": 10,
+            "plant": 148,
+            "skin": 13,
+            "soil": 295,
+            "stool": 1,
+            "water": 619
+          },
+          "wgs": {
+            "feces": 190,
+            "gut": 1473,
+            "oral": 0,
+            "plant": 6,
+            "skin": 138,
+            "soil": 98,
+            "stool": 0,
+            "water": 292
+          }
+        },
+        "nmi_tech_biome": 0.09545563191878492,
+        "predict_biome_from_tech": {
+          "acc_mean": 0.5287665250586733,
+          "acc_se": 0.00023016699613778315,
+          "balanced_acc_mean": 0.1392857142857143,
+          "balanced_acc_se": 0.0035714285714285696,
+          "chance": 0.5287664553876158,
+          "balanced_chance": 0.125,
+          "n": 4102,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "predict_tech_from_biome": {
+          "acc_mean": 0.7006304031371616,
+          "acc_se": 0.007831966645730853,
+          "balanced_acc_mean": 0.6915087420217638,
+          "balanced_acc_se": 0.00824982258170542,
+          "chance": 0.5355923939541687,
+          "balanced_chance": 0.5,
+          "n": 4102,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "note": "NMI\u22480 and both directional probes\u2248chance => tech and biome are separable, invariance is well-posed. High NMI / high directional acc => confounded, so perfect tech-invariance is IMPOSSIBLE without losing biome (the ceiling)."
+      },
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9578629032258064,
+          "acc_se": 0.0023940205820640907,
+          "balanced_acc_mean": 0.9578604381242242,
+          "balanced_acc_se": 0.002396398018537228,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.896774193548387,
+          "acc_se": 0.0014112903225806477,
+          "balanced_acc_mean": 0.896899370964426,
+          "balanced_acc_se": 0.0013938798215780911,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9379032258064516,
+          "acc_se": 0.004944656640496264,
+          "balanced_acc_mean": 0.9380121152544374,
+          "balanced_acc_se": 0.0049277268823316065,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8724786262640952,
+          "acc_se": 0.0028275667891863106,
+          "balanced_acc_mean": 0.8300290734699626,
+          "balanced_acc_se": 0.02465504409992873,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8355482643496386,
+          "acc_se": 0.0056542634183144895,
+          "balanced_acc_mean": 0.741043053792634,
+          "balanced_acc_se": 0.036447164309001204,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8601697174607214,
+          "acc_se": 0.006483497030432842,
+          "balanced_acc_mean": 0.7937392661216569,
+          "balanced_acc_se": 0.023639362681230625,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9774193548387098,
+          "acc_se": 0.0021049005058287355,
+          "balanced_acc_mean": 0.9773915956122737,
+          "balanced_acc_se": 0.002101554882672312,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.9538306451612903,
+          "acc_se": 0.003113597824895261,
+          "balanced_acc_mean": 0.9538656936095513,
+          "balanced_acc_se": 0.003107427525223956,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9530241935483872,
+          "acc_se": 0.0051163619114715795,
+          "balanced_acc_mean": 0.9530392765477854,
+          "balanced_acc_se": 0.005123787898658011,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8835554020564838,
+          "acc_se": 0.0033999787220725364,
+          "balanced_acc_mean": 0.81120259541041,
+          "balanced_acc_se": 0.030717464676382703,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8601712322541945,
+          "acc_se": 0.003868728954527396,
+          "balanced_acc_mean": 0.7686274203644515,
+          "balanced_acc_se": 0.027050360101133347,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8623876780639728,
+          "acc_se": 0.005943037914303111,
+          "balanced_acc_mean": 0.7916513322826371,
+          "balanced_acc_se": 0.0304811044508882,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 0.0,
+        "seed": 3,
+        "tag": "techinv_vicreg_c0_s3"
+      }
+    },
+    {
+      "n_samples": 4960,
+      "per_class_cap": 2500,
+      "strategy_counts": {
+        "amplicon": 2461,
+        "wgs": 2499
+      },
+      "n_with_biome": 4062,
+      "biome_counts": {
+        "feces": 313,
+        "gut": 2163,
+        "oral": 10,
+        "plant": 141,
+        "skin": 151,
+        "soil": 374,
+        "stool": 1,
+        "water": 909
+      },
+      "confounding": {
+        "n_with_both": 4102,
+        "crosstab_strat_x_biome": {
+          "amplicon": {
+            "feces": 123,
+            "gut": 696,
+            "oral": 10,
+            "plant": 148,
+            "skin": 13,
+            "soil": 295,
+            "stool": 1,
+            "water": 619
+          },
+          "wgs": {
+            "feces": 190,
+            "gut": 1473,
+            "oral": 0,
+            "plant": 6,
+            "skin": 138,
+            "soil": 98,
+            "stool": 0,
+            "water": 292
+          }
+        },
+        "nmi_tech_biome": 0.09545563191878492,
+        "predict_biome_from_tech": {
+          "acc_mean": 0.5287665250586733,
+          "acc_se": 0.00023016699613778315,
+          "balanced_acc_mean": 0.1392857142857143,
+          "balanced_acc_se": 0.0035714285714285696,
+          "chance": 0.5287664553876158,
+          "balanced_chance": 0.125,
+          "n": 4102,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "predict_tech_from_biome": {
+          "acc_mean": 0.7006304031371616,
+          "acc_se": 0.007831966645730853,
+          "balanced_acc_mean": 0.6915087420217638,
+          "balanced_acc_se": 0.00824982258170542,
+          "chance": 0.5355923939541687,
+          "balanced_chance": 0.5,
+          "n": 4102,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "note": "NMI\u22480 and both directional probes\u2248chance => tech and biome are separable, invariance is well-posed. High NMI / high directional acc => confounded, so perfect tech-invariance is IMPOSSIBLE without losing biome (the ceiling)."
+      },
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9471774193548386,
+          "acc_se": 0.004723941336233853,
+          "balanced_acc_mean": 0.9471983066315681,
+          "balanced_acc_se": 0.004715551725977359,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.896774193548387,
+          "acc_se": 0.0014112903225806477,
+          "balanced_acc_mean": 0.896899370964426,
+          "balanced_acc_se": 0.0013938798215780911,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9379032258064516,
+          "acc_se": 0.004944656640496264,
+          "balanced_acc_mean": 0.9380121152544374,
+          "balanced_acc_se": 0.0049277268823316065,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8714918897957453,
+          "acc_se": 0.0029290892661101805,
+          "balanced_acc_mean": 0.8276457188355305,
+          "balanced_acc_se": 0.03720347392503759,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8355482643496386,
+          "acc_se": 0.0056542634183144895,
+          "balanced_acc_mean": 0.741043053792634,
+          "balanced_acc_se": 0.036447164309001204,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8601697174607214,
+          "acc_se": 0.006483497030432842,
+          "balanced_acc_mean": 0.7937392661216569,
+          "balanced_acc_se": 0.023639362681230625,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9727822580645162,
+          "acc_se": 0.002990402615764387,
+          "balanced_acc_mean": 0.9727603121148546,
+          "balanced_acc_se": 0.002983077334468543,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.9538306451612903,
+          "acc_se": 0.003113597824895261,
+          "balanced_acc_mean": 0.9538656936095513,
+          "balanced_acc_se": 0.003107427525223956,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9530241935483872,
+          "acc_se": 0.0051163619114715795,
+          "balanced_acc_mean": 0.9530392765477854,
+          "balanced_acc_se": 0.005123787898658011,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.887494773962518,
+          "acc_se": 0.005223297885652841,
+          "balanced_acc_mean": 0.8249373579066095,
+          "balanced_acc_se": 0.033198165707152706,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8601712322541945,
+          "acc_se": 0.003868728954527396,
+          "balanced_acc_mean": 0.7686274203644515,
+          "balanced_acc_se": 0.027050360101133347,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8623876780639728,
+          "acc_se": 0.005943037914303111,
+          "balanced_acc_mean": 0.7916513322826371,
+          "balanced_acc_se": 0.0304811044508882,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 0.3,
+        "seed": 0,
+        "tag": "techinv_vicreg_c0p3_s0"
+      }
+    },
+    {
+      "n_samples": 4960,
+      "per_class_cap": 2500,
+      "strategy_counts": {
+        "amplicon": 2461,
+        "wgs": 2499
+      },
+      "n_with_biome": 4062,
+      "biome_counts": {
+        "feces": 313,
+        "gut": 2163,
+        "oral": 10,
+        "plant": 141,
+        "skin": 151,
+        "soil": 374,
+        "stool": 1,
+        "water": 909
+      },
+      "confounding": {
+        "n_with_both": 4102,
+        "crosstab_strat_x_biome": {
+          "amplicon": {
+            "feces": 123,
+            "gut": 696,
+            "oral": 10,
+            "plant": 148,
+            "skin": 13,
+            "soil": 295,
+            "stool": 1,
+            "water": 619
+          },
+          "wgs": {
+            "feces": 190,
+            "gut": 1473,
+            "oral": 0,
+            "plant": 6,
+            "skin": 138,
+            "soil": 98,
+            "stool": 0,
+            "water": 292
+          }
+        },
+        "nmi_tech_biome": 0.09545563191878492,
+        "predict_biome_from_tech": {
+          "acc_mean": 0.5287665250586733,
+          "acc_se": 0.00023016699613778315,
+          "balanced_acc_mean": 0.1392857142857143,
+          "balanced_acc_se": 0.0035714285714285696,
+          "chance": 0.5287664553876158,
+          "balanced_chance": 0.125,
+          "n": 4102,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "predict_tech_from_biome": {
+          "acc_mean": 0.7006304031371616,
+          "acc_se": 0.007831966645730853,
+          "balanced_acc_mean": 0.6915087420217638,
+          "balanced_acc_se": 0.00824982258170542,
+          "chance": 0.5355923939541687,
+          "balanced_chance": 0.5,
+          "n": 4102,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "note": "NMI\u22480 and both directional probes\u2248chance => tech and biome are separable, invariance is well-posed. High NMI / high directional acc => confounded, so perfect tech-invariance is IMPOSSIBLE without losing biome (the ceiling)."
+      },
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9550403225806452,
+          "acc_se": 0.0023769810730950684,
+          "balanced_acc_mean": 0.9550628197075891,
+          "balanced_acc_se": 0.0023616697480510307,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.896774193548387,
+          "acc_se": 0.0014112903225806477,
+          "balanced_acc_mean": 0.896899370964426,
+          "balanced_acc_se": 0.0013938798215780911,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9379032258064516,
+          "acc_se": 0.004944656640496264,
+          "balanced_acc_mean": 0.9380121152544374,
+          "balanced_acc_se": 0.0049277268823316065,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8675570622701301,
+          "acc_se": 0.003583463328301113,
+          "balanced_acc_mean": 0.8268677635223801,
+          "balanced_acc_se": 0.03216320326421695,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8355482643496386,
+          "acc_se": 0.0056542634183144895,
+          "balanced_acc_mean": 0.741043053792634,
+          "balanced_acc_se": 0.036447164309001204,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8601697174607214,
+          "acc_se": 0.006483497030432842,
+          "balanced_acc_mean": 0.7937392661216569,
+          "balanced_acc_se": 0.023639362681230625,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9774193548387098,
+          "acc_se": 0.0019285409747690394,
+          "balanced_acc_mean": 0.9774058055919553,
+          "balanced_acc_se": 0.0019390380038740902,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.9538306451612903,
+          "acc_se": 0.003113597824895261,
+          "balanced_acc_mean": 0.9538656936095513,
+          "balanced_acc_se": 0.003107427525223956,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9530241935483872,
+          "acc_se": 0.0051163619114715795,
+          "balanced_acc_mean": 0.9530392765477854,
+          "balanced_acc_se": 0.005123787898658011,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.883065214888602,
+          "acc_se": 0.0049076569292609016,
+          "balanced_acc_mean": 0.8331029975559587,
+          "balanced_acc_se": 0.032446580356309894,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8601712322541945,
+          "acc_se": 0.003868728954527396,
+          "balanced_acc_mean": 0.7686274203644515,
+          "balanced_acc_se": 0.027050360101133347,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8623876780639728,
+          "acc_se": 0.005943037914303111,
+          "balanced_acc_mean": 0.7916513322826371,
+          "balanced_acc_se": 0.0304811044508882,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 0.3,
+        "seed": 3,
+        "tag": "techinv_vicreg_c0p3_s3"
+      }
+    },
+    {
+      "n_samples": 4960,
+      "per_class_cap": 2500,
+      "strategy_counts": {
+        "amplicon": 2461,
+        "wgs": 2499
+      },
+      "n_with_biome": 4062,
+      "biome_counts": {
+        "feces": 313,
+        "gut": 2163,
+        "oral": 10,
+        "plant": 141,
+        "skin": 151,
+        "soil": 374,
+        "stool": 1,
+        "water": 909
+      },
+      "confounding": {
+        "n_with_both": 4102,
+        "crosstab_strat_x_biome": {
+          "amplicon": {
+            "feces": 123,
+            "gut": 696,
+            "oral": 10,
+            "plant": 148,
+            "skin": 13,
+            "soil": 295,
+            "stool": 1,
+            "water": 619
+          },
+          "wgs": {
+            "feces": 190,
+            "gut": 1473,
+            "oral": 0,
+            "plant": 6,
+            "skin": 138,
+            "soil": 98,
+            "stool": 0,
+            "water": 292
+          }
+        },
+        "nmi_tech_biome": 0.09545563191878492,
+        "predict_biome_from_tech": {
+          "acc_mean": 0.5287665250586733,
+          "acc_se": 0.00023016699613778315,
+          "balanced_acc_mean": 0.1392857142857143,
+          "balanced_acc_se": 0.0035714285714285696,
+          "chance": 0.5287664553876158,
+          "balanced_chance": 0.125,
+          "n": 4102,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "predict_tech_from_biome": {
+          "acc_mean": 0.7006304031371616,
+          "acc_se": 0.007831966645730853,
+          "balanced_acc_mean": 0.6915087420217638,
+          "balanced_acc_se": 0.00824982258170542,
+          "chance": 0.5355923939541687,
+          "balanced_chance": 0.5,
+          "n": 4102,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "note": "NMI\u22480 and both directional probes\u2248chance => tech and biome are separable, invariance is well-posed. High NMI / high directional acc => confounded, so perfect tech-invariance is IMPOSSIBLE without losing biome (the ceiling)."
+      },
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.961491935483871,
+          "acc_se": 0.0028225806451612815,
+          "balanced_acc_mean": 0.9615054969319565,
+          "balanced_acc_se": 0.0028280544991018297,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.896774193548387,
+          "acc_se": 0.0014112903225806477,
+          "balanced_acc_mean": 0.896899370964426,
+          "balanced_acc_se": 0.0013938798215780911,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9379032258064516,
+          "acc_se": 0.004944656640496264,
+          "balanced_acc_mean": 0.9380121152544374,
+          "balanced_acc_se": 0.0049277268823316065,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8655860130029872,
+          "acc_se": 0.004477092960885036,
+          "balanced_acc_mean": 0.8121613890814763,
+          "balanced_acc_se": 0.02734338413998208,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8355482643496386,
+          "acc_se": 0.0056542634183144895,
+          "balanced_acc_mean": 0.741043053792634,
+          "balanced_acc_se": 0.036447164309001204,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8601697174607214,
+          "acc_se": 0.006483497030432842,
+          "balanced_acc_mean": 0.7937392661216569,
+          "balanced_acc_se": 0.023639362681230625,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9794354838709678,
+          "acc_se": 0.0019285409747690477,
+          "balanced_acc_mean": 0.9794086571004771,
+          "balanced_acc_se": 0.001924392203069316,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.9538306451612903,
+          "acc_se": 0.003113597824895261,
+          "balanced_acc_mean": 0.9538656936095513,
+          "balanced_acc_se": 0.003107427525223956,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9530241935483872,
+          "acc_se": 0.0051163619114715795,
+          "balanced_acc_mean": 0.9530392765477854,
+          "balanced_acc_se": 0.005123787898658011,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8867558577063603,
+          "acc_se": 0.004602857225041012,
+          "balanced_acc_mean": 0.8417578955175449,
+          "balanced_acc_se": 0.025627807802344596,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8601712322541945,
+          "acc_se": 0.003868728954527396,
+          "balanced_acc_mean": 0.7686274203644515,
+          "balanced_acc_se": 0.027050360101133347,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8623876780639728,
+          "acc_se": 0.005943037914303111,
+          "balanced_acc_mean": 0.7916513322826371,
+          "balanced_acc_se": 0.0304811044508882,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 0.0,
+        "seed": 4,
+        "tag": "techinv_vicreg_c0_s4"
+      }
+    },
+    {
+      "n_samples": 4960,
+      "per_class_cap": 2500,
+      "strategy_counts": {
+        "amplicon": 2461,
+        "wgs": 2499
+      },
+      "n_with_biome": 4062,
+      "biome_counts": {
+        "feces": 313,
+        "gut": 2163,
+        "oral": 10,
+        "plant": 141,
+        "skin": 151,
+        "soil": 374,
+        "stool": 1,
+        "water": 909
+      },
+      "confounding": {
+        "n_with_both": 4102,
+        "crosstab_strat_x_biome": {
+          "amplicon": {
+            "feces": 123,
+            "gut": 696,
+            "oral": 10,
+            "plant": 148,
+            "skin": 13,
+            "soil": 295,
+            "stool": 1,
+            "water": 619
+          },
+          "wgs": {
+            "feces": 190,
+            "gut": 1473,
+            "oral": 0,
+            "plant": 6,
+            "skin": 138,
+            "soil": 98,
+            "stool": 0,
+            "water": 292
+          }
+        },
+        "nmi_tech_biome": 0.09545563191878492,
+        "predict_biome_from_tech": {
+          "acc_mean": 0.5287665250586733,
+          "acc_se": 0.00023016699613778315,
+          "balanced_acc_mean": 0.1392857142857143,
+          "balanced_acc_se": 0.0035714285714285696,
+          "chance": 0.5287664553876158,
+          "balanced_chance": 0.125,
+          "n": 4102,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "predict_tech_from_biome": {
+          "acc_mean": 0.7006304031371616,
+          "acc_se": 0.007831966645730853,
+          "balanced_acc_mean": 0.6915087420217638,
+          "balanced_acc_se": 0.00824982258170542,
+          "chance": 0.5355923939541687,
+          "balanced_chance": 0.5,
+          "n": 4102,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "note": "NMI\u22480 and both directional probes\u2248chance => tech and biome are separable, invariance is well-posed. High NMI / high directional acc => confounded, so perfect tech-invariance is IMPOSSIBLE without losing biome (the ceiling)."
+      },
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.963508064516129,
+          "acc_se": 0.004421716169246235,
+          "balanced_acc_mean": 0.9634994283690983,
+          "balanced_acc_se": 0.004416360611420141,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.896774193548387,
+          "acc_se": 0.0014112903225806477,
+          "balanced_acc_mean": 0.896899370964426,
+          "balanced_acc_se": 0.0013938798215780911,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9379032258064516,
+          "acc_se": 0.004944656640496264,
+          "balanced_acc_mean": 0.9380121152544374,
+          "balanced_acc_se": 0.0049277268823316065,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8707529735395877,
+          "acc_se": 0.0036332048269563004,
+          "balanced_acc_mean": 0.8254297356310655,
+          "balanced_acc_se": 0.025150817093988996,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8355482643496386,
+          "acc_se": 0.0056542634183144895,
+          "balanced_acc_mean": 0.741043053792634,
+          "balanced_acc_se": 0.036447164309001204,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8601697174607214,
+          "acc_se": 0.006483497030432842,
+          "balanced_acc_mean": 0.7937392661216569,
+          "balanced_acc_se": 0.023639362681230625,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9794354838709678,
+          "acc_se": 0.002267585056290733,
+          "balanced_acc_mean": 0.979416386518977,
+          "balanced_acc_se": 0.0022807478117196473,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.9538306451612903,
+          "acc_se": 0.003113597824895261,
+          "balanced_acc_mean": 0.9538656936095513,
+          "balanced_acc_se": 0.003107427525223956,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9530241935483872,
+          "acc_se": 0.0051163619114715795,
+          "balanced_acc_mean": 0.9530392765477854,
+          "balanced_acc_se": 0.005123787898658011,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8879879907173457,
+          "acc_se": 0.007038960226793573,
+          "balanced_acc_mean": 0.8557053286817299,
+          "balanced_acc_se": 0.02345704072541615,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8601712322541945,
+          "acc_se": 0.003868728954527396,
+          "balanced_acc_mean": 0.7686274203644515,
+          "balanced_acc_se": 0.027050360101133347,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8623876780639728,
+          "acc_se": 0.005943037914303111,
+          "balanced_acc_mean": 0.7916513322826371,
+          "balanced_acc_se": 0.0304811044508882,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 0.0,
+        "seed": 5,
+        "tag": "techinv_vicreg_c0_s5"
+      }
+    },
+    {
+      "n_samples": 4960,
+      "per_class_cap": 2500,
+      "strategy_counts": {
+        "amplicon": 2461,
+        "wgs": 2499
+      },
+      "n_with_biome": 4062,
+      "biome_counts": {
+        "feces": 313,
+        "gut": 2163,
+        "oral": 10,
+        "plant": 141,
+        "skin": 151,
+        "soil": 374,
+        "stool": 1,
+        "water": 909
+      },
+      "confounding": {
+        "n_with_both": 4102,
+        "crosstab_strat_x_biome": {
+          "amplicon": {
+            "feces": 123,
+            "gut": 696,
+            "oral": 10,
+            "plant": 148,
+            "skin": 13,
+            "soil": 295,
+            "stool": 1,
+            "water": 619
+          },
+          "wgs": {
+            "feces": 190,
+            "gut": 1473,
+            "oral": 0,
+            "plant": 6,
+            "skin": 138,
+            "soil": 98,
+            "stool": 0,
+            "water": 292
+          }
+        },
+        "nmi_tech_biome": 0.09545563191878492,
+        "predict_biome_from_tech": {
+          "acc_mean": 0.5287665250586733,
+          "acc_se": 0.00023016699613778315,
+          "balanced_acc_mean": 0.1392857142857143,
+          "balanced_acc_se": 0.0035714285714285696,
+          "chance": 0.5287664553876158,
+          "balanced_chance": 0.125,
+          "n": 4102,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "predict_tech_from_biome": {
+          "acc_mean": 0.7006304031371616,
+          "acc_se": 0.007831966645730853,
+          "balanced_acc_mean": 0.6915087420217638,
+          "balanced_acc_se": 0.00824982258170542,
+          "chance": 0.5355923939541687,
+          "balanced_chance": 0.5,
+          "n": 4102,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "note": "NMI\u22480 and both directional probes\u2248chance => tech and biome are separable, invariance is well-posed. High NMI / high directional acc => confounded, so perfect tech-invariance is IMPOSSIBLE without losing biome (the ceiling)."
+      },
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9596774193548387,
+          "acc_se": 0.0017166720126941838,
+          "balanced_acc_mean": 0.9596721752811515,
+          "balanced_acc_se": 0.0017059928810387072,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.896774193548387,
+          "acc_se": 0.0014112903225806477,
+          "balanced_acc_mean": 0.896899370964426,
+          "balanced_acc_se": 0.0013938798215780911,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9379032258064516,
+          "acc_se": 0.004944656640496264,
+          "balanced_acc_mean": 0.9380121152544374,
+          "balanced_acc_se": 0.0049277268823316065,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8702591508673707,
+          "acc_se": 0.003822501488877204,
+          "balanced_acc_mean": 0.8435426617161159,
+          "balanced_acc_se": 0.025073281078386897,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8355482643496386,
+          "acc_se": 0.0056542634183144895,
+          "balanced_acc_mean": 0.741043053792634,
+          "balanced_acc_se": 0.036447164309001204,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8601697174607214,
+          "acc_se": 0.006483497030432842,
+          "balanced_acc_mean": 0.7937392661216569,
+          "balanced_acc_se": 0.023639362681230625,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9784274193548388,
+          "acc_se": 0.0012988002748714888,
+          "balanced_acc_mean": 0.9784094701780083,
+          "balanced_acc_se": 0.0012857046669820624,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.9538306451612903,
+          "acc_se": 0.003113597824895261,
+          "balanced_acc_mean": 0.9538656936095513,
+          "balanced_acc_se": 0.003107427525223956,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9530241935483872,
+          "acc_se": 0.0051163619114715795,
+          "balanced_acc_mean": 0.9530392765477854,
+          "balanced_acc_se": 0.005123787898658011,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.884783596604439,
+          "acc_se": 0.0055917100791110395,
+          "balanced_acc_mean": 0.8275431005899712,
+          "balanced_acc_se": 0.036086058718074104,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8601712322541945,
+          "acc_se": 0.003868728954527396,
+          "balanced_acc_mean": 0.7686274203644515,
+          "balanced_acc_se": 0.027050360101133347,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8623876780639728,
+          "acc_se": 0.005943037914303111,
+          "balanced_acc_mean": 0.7916513322826371,
+          "balanced_acc_se": 0.0304811044508882,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 0.0,
+        "seed": 1,
+        "tag": "techinv_vicreg_c0_s1"
+      }
+    },
+    {
+      "n_samples": 798,
+      "per_class_cap": 400,
+      "strategy_counts": {
+        "amplicon": 398,
+        "wgs": 400
+      },
+      "n_with_biome": 786,
+      "biome_counts": {
+        "feces": 126,
+        "gut": 239,
+        "plant": 42,
+        "skin": 8,
+        "soil": 106,
+        "stool": 1,
+        "water": 264
+      },
+      "confounding": {
+        "n_with_both": 788,
+        "crosstab_strat_x_biome": {
+          "amplicon": {
+            "feces": 0,
+            "gut": 164,
+            "plant": 42,
+            "skin": 8,
+            "soil": 39,
+            "stool": 1,
+            "water": 134
+          },
+          "wgs": {
+            "feces": 126,
+            "gut": 75,
+            "plant": 0,
+            "skin": 0,
+            "soil": 68,
+            "stool": 0,
+            "water": 131
+          }
+        },
+        "nmi_tech_biome": 0.16586209676929028,
+        "predict_biome_from_tech": {
+          "acc_mean": 0.3744577924695639,
+          "acc_se": 0.015457703373506854,
+          "balanced_acc_mean": 0.19167821618142772,
+          "balanced_acc_se": 0.01178117829183069,
+          "chance": 0.3362944162436548,
+          "balanced_chance": 0.14285714285714285,
+          "n": 788,
+          "n_classes": 7,
+          "probe_kind": "linear"
+        },
+        "predict_tech_from_biome": {
+          "acc_mean": 0.6725953398371362,
+          "acc_se": 0.017842935643280648,
+          "balanced_acc_mean": 0.6736917249417249,
+          "balanced_acc_se": 0.01812068995598509,
+          "chance": 0.5076142131979695,
+          "balanced_chance": 0.5,
+          "n": 788,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "note": "NMI\u22480 and both directional probes\u2248chance => tech and biome are separable, invariance is well-posed. High NMI / high directional acc => confounded, so perfect tech-invariance is IMPOSSIBLE without losing biome (the ceiling)."
+      },
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9512028301886792,
+          "acc_se": 0.012218563221666083,
+          "balanced_acc_mean": 0.9511867088607595,
+          "balanced_acc_se": 0.012208690964821238,
+          "chance": 0.5012531328320802,
+          "balanced_chance": 0.5,
+          "n": 798,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.9512028301886792,
+          "acc_se": 0.012218563221666083,
+          "balanced_acc_mean": 0.9511867088607595,
+          "balanced_acc_se": 0.012208690964821238,
+          "chance": 0.5012531328320802,
+          "balanced_chance": 0.5,
+          "n": 798,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9624764150943396,
+          "acc_se": 0.013392847654267404,
+          "balanced_acc_mean": 0.9624683544303798,
+          "balanced_acc_se": 0.013388161177622347,
+          "chance": 0.5012531328320802,
+          "balanced_chance": 0.5,
+          "n": 798,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.7532209949205837,
+          "acc_se": 0.01156764346289966,
+          "balanced_acc_mean": 0.7582494974508223,
+          "balanced_acc_se": 0.03308305383333999,
+          "chance": 0.33587786259541985,
+          "balanced_chance": 0.14285714285714285,
+          "n": 786,
+          "n_classes": 7,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.7519471095702652,
+          "acc_se": 0.011682059251832045,
+          "balanced_acc_mean": 0.7575550530063777,
+          "balanced_acc_se": 0.033347522986420686,
+          "chance": 0.33587786259541985,
+          "balanced_chance": 0.14285714285714285,
+          "n": 786,
+          "n_classes": 7,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.7748206079174393,
+          "acc_se": 0.004151015590801349,
+          "balanced_acc_mean": 0.7881872284006682,
+          "balanced_acc_se": 0.02606167963333224,
+          "chance": 0.33587786259541985,
+          "balanced_chance": 0.14285714285714285,
+          "n": 786,
+          "n_classes": 7,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9687028301886791,
+          "acc_se": 0.008597951677632745,
+          "balanced_acc_mean": 0.9686708860759493,
+          "balanced_acc_se": 0.008586430665874792,
+          "chance": 0.5012531328320802,
+          "balanced_chance": 0.5,
+          "n": 798,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.969944968553459,
+          "acc_se": 0.006042238232171709,
+          "balanced_acc_mean": 0.9699208860759493,
+          "balanced_acc_se": 0.006031179833786253,
+          "chance": 0.5012531328320802,
+          "balanced_chance": 0.5,
+          "n": 798,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9561871069182389,
+          "acc_se": 0.009457947431630028,
+          "balanced_acc_mean": 0.9561392405063291,
+          "balanced_acc_se": 0.009439706860622565,
+          "chance": 0.5012531328320802,
+          "balanced_chance": 0.5,
+          "n": 798,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.7913972426025961,
+          "acc_se": 0.012067330976054159,
+          "balanced_acc_mean": 0.7955678275582646,
+          "balanced_acc_se": 0.02337673787220076,
+          "chance": 0.33587786259541985,
+          "balanced_chance": 0.14285714285714285,
+          "n": 786,
+          "n_classes": 7,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.7850278158510038,
+          "acc_se": 0.009477575762433367,
+          "balanced_acc_mean": 0.7904490967259075,
+          "balanced_acc_se": 0.024870157631958222,
+          "chance": 0.33587786259541985,
+          "balanced_chance": 0.14285714285714285,
+          "n": 786,
+          "n_classes": 7,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.7875755865516408,
+          "acc_se": 0.011258237478649012,
+          "balanced_acc_mean": 0.7956463130141086,
+          "balanced_acc_se": 0.025800463127715518,
+          "chance": 0.33587786259541985,
+          "balanced_chance": 0.14285714285714285,
+          "n": 786,
+          "n_classes": 7,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 1.0,
+        "seed": 0,
+        "tag": "techinv_vicreg_c1p0_s0"
+      }
+    },
+    {
+      "n_samples": 4960,
+      "per_class_cap": 2500,
+      "strategy_counts": {
+        "amplicon": 2461,
+        "wgs": 2499
+      },
+      "n_with_biome": 4062,
+      "biome_counts": {
+        "feces": 313,
+        "gut": 2163,
+        "oral": 10,
+        "plant": 141,
+        "skin": 151,
+        "soil": 374,
+        "stool": 1,
+        "water": 909
+      },
+      "confounding": {
+        "n_with_both": 4102,
+        "crosstab_strat_x_biome": {
+          "amplicon": {
+            "feces": 123,
+            "gut": 696,
+            "oral": 10,
+            "plant": 148,
+            "skin": 13,
+            "soil": 295,
+            "stool": 1,
+            "water": 619
+          },
+          "wgs": {
+            "feces": 190,
+            "gut": 1473,
+            "oral": 0,
+            "plant": 6,
+            "skin": 138,
+            "soil": 98,
+            "stool": 0,
+            "water": 292
+          }
+        },
+        "nmi_tech_biome": 0.09545563191878492,
+        "predict_biome_from_tech": {
+          "acc_mean": 0.5287665250586733,
+          "acc_se": 0.00023016699613778315,
+          "balanced_acc_mean": 0.1392857142857143,
+          "balanced_acc_se": 0.0035714285714285696,
+          "chance": 0.5287664553876158,
+          "balanced_chance": 0.125,
+          "n": 4102,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "predict_tech_from_biome": {
+          "acc_mean": 0.7006304031371616,
+          "acc_se": 0.007831966645730853,
+          "balanced_acc_mean": 0.6915087420217638,
+          "balanced_acc_se": 0.00824982258170542,
+          "chance": 0.5355923939541687,
+          "balanced_chance": 0.5,
+          "n": 4102,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "note": "NMI\u22480 and both directional probes\u2248chance => tech and biome are separable, invariance is well-posed. High NMI / high directional acc => confounded, so perfect tech-invariance is IMPOSSIBLE without losing biome (the ceiling)."
+      },
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9473790322580646,
+          "acc_se": 0.002124123740494497,
+          "balanced_acc_mean": 0.9473783586566592,
+          "balanced_acc_se": 0.0021431982025336602,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.896774193548387,
+          "acc_se": 0.0014112903225806477,
+          "balanced_acc_mean": 0.896899370964426,
+          "balanced_acc_se": 0.0013938798215780911,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9379032258064516,
+          "acc_se": 0.004944656640496264,
+          "balanced_acc_mean": 0.9380121152544374,
+          "balanced_acc_se": 0.0049277268823316065,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8675537297244894,
+          "acc_se": 0.002406175855825729,
+          "balanced_acc_mean": 0.8270614665337022,
+          "balanced_acc_se": 0.023348462520832863,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8355482643496386,
+          "acc_se": 0.0056542634183144895,
+          "balanced_acc_mean": 0.741043053792634,
+          "balanced_acc_se": 0.036447164309001204,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8601697174607214,
+          "acc_se": 0.006483497030432842,
+          "balanced_acc_mean": 0.7937392661216569,
+          "balanced_acc_se": 0.023639362681230625,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9766129032258064,
+          "acc_se": 0.002240535359969035,
+          "balanced_acc_mean": 0.9765882974048494,
+          "balanced_acc_se": 0.002247980651460513,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.9538306451612903,
+          "acc_se": 0.003113597824895261,
+          "balanced_acc_mean": 0.9538656936095513,
+          "balanced_acc_se": 0.003107427525223956,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9530241935483872,
+          "acc_se": 0.0051163619114715795,
+          "balanced_acc_mean": 0.9530392765477854,
+          "balanced_acc_se": 0.005123787898658011,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8842979538169766,
+          "acc_se": 0.004196355907205292,
+          "balanced_acc_mean": 0.8277270189755412,
+          "balanced_acc_se": 0.02352509498195783,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8601712322541945,
+          "acc_se": 0.003868728954527396,
+          "balanced_acc_mean": 0.7686274203644515,
+          "balanced_acc_se": 0.027050360101133347,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8623876780639728,
+          "acc_se": 0.005943037914303111,
+          "balanced_acc_mean": 0.7916513322826371,
+          "balanced_acc_se": 0.0304811044508882,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 0.3,
+        "seed": 1,
+        "tag": "techinv_vicreg_c0p3_s1"
+      }
+    },
+    {
+      "n_samples": 4960,
+      "per_class_cap": 2500,
+      "strategy_counts": {
+        "amplicon": 2461,
+        "wgs": 2499
+      },
+      "n_with_biome": 4062,
+      "biome_counts": {
+        "feces": 313,
+        "gut": 2163,
+        "oral": 10,
+        "plant": 141,
+        "skin": 151,
+        "soil": 374,
+        "stool": 1,
+        "water": 909
+      },
+      "confounding": {
+        "n_with_both": 4102,
+        "crosstab_strat_x_biome": {
+          "amplicon": {
+            "feces": 123,
+            "gut": 696,
+            "oral": 10,
+            "plant": 148,
+            "skin": 13,
+            "soil": 295,
+            "stool": 1,
+            "water": 619
+          },
+          "wgs": {
+            "feces": 190,
+            "gut": 1473,
+            "oral": 0,
+            "plant": 6,
+            "skin": 138,
+            "soil": 98,
+            "stool": 0,
+            "water": 292
+          }
+        },
+        "nmi_tech_biome": 0.09545563191878492,
+        "predict_biome_from_tech": {
+          "acc_mean": 0.5287665250586733,
+          "acc_se": 0.00023016699613778315,
+          "balanced_acc_mean": 0.1392857142857143,
+          "balanced_acc_se": 0.0035714285714285696,
+          "chance": 0.5287664553876158,
+          "balanced_chance": 0.125,
+          "n": 4102,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "predict_tech_from_biome": {
+          "acc_mean": 0.7006304031371616,
+          "acc_se": 0.007831966645730853,
+          "balanced_acc_mean": 0.6915087420217638,
+          "balanced_acc_se": 0.00824982258170542,
+          "chance": 0.5355923939541687,
+          "balanced_chance": 0.5,
+          "n": 4102,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "note": "NMI\u22480 and both directional probes\u2248chance => tech and biome are separable, invariance is well-posed. High NMI / high directional acc => confounded, so perfect tech-invariance is IMPOSSIBLE without losing biome (the ceiling)."
+      },
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9495967741935484,
+          "acc_se": 0.00464147759404087,
+          "balanced_acc_mean": 0.9496259596883043,
+          "balanced_acc_se": 0.004662004101695121,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.896774193548387,
+          "acc_se": 0.0014112903225806477,
+          "balanced_acc_mean": 0.896899370964426,
+          "balanced_acc_se": 0.0013938798215780911,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9379032258064516,
+          "acc_se": 0.004944656640496264,
+          "balanced_acc_mean": 0.9380121152544374,
+          "balanced_acc_se": 0.0049277268823316065,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8641081804906718,
+          "acc_se": 0.005418828970989532,
+          "balanced_acc_mean": 0.8146719149951464,
+          "balanced_acc_se": 0.02837031857681812,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8355482643496386,
+          "acc_se": 0.0056542634183144895,
+          "balanced_acc_mean": 0.741043053792634,
+          "balanced_acc_se": 0.036447164309001204,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8601697174607214,
+          "acc_se": 0.006483497030432842,
+          "balanced_acc_mean": 0.7937392661216569,
+          "balanced_acc_se": 0.023639362681230625,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9788306451612904,
+          "acc_se": 0.0018587791244542124,
+          "balanced_acc_mean": 0.9788050157406785,
+          "balanced_acc_se": 0.001847852760340368,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.9538306451612903,
+          "acc_se": 0.003113597824895261,
+          "balanced_acc_mean": 0.9538656936095513,
+          "balanced_acc_se": 0.003107427525223956,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9530241935483872,
+          "acc_se": 0.0051163619114715795,
+          "balanced_acc_mean": 0.9530392765477854,
+          "balanced_acc_se": 0.005123787898658011,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8830600645907938,
+          "acc_se": 0.004024333936181514,
+          "balanced_acc_mean": 0.8297119205904755,
+          "balanced_acc_se": 0.04856385247989225,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8601712322541945,
+          "acc_se": 0.003868728954527396,
+          "balanced_acc_mean": 0.7686274203644515,
+          "balanced_acc_se": 0.027050360101133347,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8623876780639728,
+          "acc_se": 0.005943037914303111,
+          "balanced_acc_mean": 0.7916513322826371,
+          "balanced_acc_se": 0.0304811044508882,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 0.3,
+        "seed": 5,
+        "tag": "techinv_vicreg_c0p3_s5"
+      }
+    },
+    {
+      "n_samples": 4960,
+      "per_class_cap": 2500,
+      "strategy_counts": {
+        "amplicon": 2461,
+        "wgs": 2499
+      },
+      "n_with_biome": 4062,
+      "biome_counts": {
+        "feces": 313,
+        "gut": 2163,
+        "oral": 10,
+        "plant": 141,
+        "skin": 151,
+        "soil": 374,
+        "stool": 1,
+        "water": 909
+      },
+      "confounding": {
+        "n_with_both": 4102,
+        "crosstab_strat_x_biome": {
+          "amplicon": {
+            "feces": 123,
+            "gut": 696,
+            "oral": 10,
+            "plant": 148,
+            "skin": 13,
+            "soil": 295,
+            "stool": 1,
+            "water": 619
+          },
+          "wgs": {
+            "feces": 190,
+            "gut": 1473,
+            "oral": 0,
+            "plant": 6,
+            "skin": 138,
+            "soil": 98,
+            "stool": 0,
+            "water": 292
+          }
+        },
+        "nmi_tech_biome": 0.09545563191878492,
+        "predict_biome_from_tech": {
+          "acc_mean": 0.5287665250586733,
+          "acc_se": 0.00023016699613778315,
+          "balanced_acc_mean": 0.1392857142857143,
+          "balanced_acc_se": 0.0035714285714285696,
+          "chance": 0.5287664553876158,
+          "balanced_chance": 0.125,
+          "n": 4102,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "predict_tech_from_biome": {
+          "acc_mean": 0.7006304031371616,
+          "acc_se": 0.007831966645730853,
+          "balanced_acc_mean": 0.6915087420217638,
+          "balanced_acc_se": 0.00824982258170542,
+          "chance": 0.5355923939541687,
+          "balanced_chance": 0.5,
+          "n": 4102,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "note": "NMI\u22480 and both directional probes\u2248chance => tech and biome are separable, invariance is well-posed. High NMI / high directional acc => confounded, so perfect tech-invariance is IMPOSSIBLE without losing biome (the ceiling)."
+      },
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9487903225806452,
+          "acc_se": 0.0026556330387740826,
+          "balanced_acc_mean": 0.9487978137577617,
+          "balanced_acc_se": 0.0026527071494487535,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.896774193548387,
+          "acc_se": 0.0014112903225806477,
+          "balanced_acc_mean": 0.896899370964426,
+          "balanced_acc_se": 0.0013938798215780911,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9379032258064516,
+          "acc_se": 0.004944656640496264,
+          "balanced_acc_mean": 0.9380121152544374,
+          "balanced_acc_se": 0.0049277268823316065,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.857211628766534,
+          "acc_se": 0.0037663815166404154,
+          "balanced_acc_mean": 0.8165390648113892,
+          "balanced_acc_se": 0.026068969194781827,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8355482643496386,
+          "acc_se": 0.0056542634183144895,
+          "balanced_acc_mean": 0.741043053792634,
+          "balanced_acc_se": 0.036447164309001204,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8601697174607214,
+          "acc_se": 0.006483497030432842,
+          "balanced_acc_mean": 0.7937392661216569,
+          "balanced_acc_se": 0.023639362681230625,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9737903225806452,
+          "acc_se": 0.0015938899496816398,
+          "balanced_acc_mean": 0.9737574491320078,
+          "balanced_acc_se": 0.0015900645816504433,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.9538306451612903,
+          "acc_se": 0.003113597824895261,
+          "balanced_acc_mean": 0.9538656936095513,
+          "balanced_acc_se": 0.003107427525223956,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9530241935483872,
+          "acc_se": 0.0051163619114715795,
+          "balanced_acc_mean": 0.9530392765477854,
+          "balanced_acc_se": 0.005123787898658011,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8872484685437987,
+          "acc_se": 0.003574574370680733,
+          "balanced_acc_mean": 0.8260920868940758,
+          "balanced_acc_se": 0.036140643645920054,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8601712322541945,
+          "acc_se": 0.003868728954527396,
+          "balanced_acc_mean": 0.7686274203644515,
+          "balanced_acc_se": 0.027050360101133347,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8623876780639728,
+          "acc_se": 0.005943037914303111,
+          "balanced_acc_mean": 0.7916513322826371,
+          "balanced_acc_se": 0.0304811044508882,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 0.3,
+        "seed": 2,
+        "tag": "techinv_vicreg_c0p3_s2"
+      }
+    },
+    {
+      "n_samples": 4960,
+      "per_class_cap": 2500,
+      "strategy_counts": {
+        "amplicon": 2461,
+        "wgs": 2499
+      },
+      "n_with_biome": 4062,
+      "biome_counts": {
+        "feces": 313,
+        "gut": 2163,
+        "oral": 10,
+        "plant": 141,
+        "skin": 151,
+        "soil": 374,
+        "stool": 1,
+        "water": 909
+      },
+      "confounding": {
+        "n_with_both": 4102,
+        "crosstab_strat_x_biome": {
+          "amplicon": {
+            "feces": 123,
+            "gut": 696,
+            "oral": 10,
+            "plant": 148,
+            "skin": 13,
+            "soil": 295,
+            "stool": 1,
+            "water": 619
+          },
+          "wgs": {
+            "feces": 190,
+            "gut": 1473,
+            "oral": 0,
+            "plant": 6,
+            "skin": 138,
+            "soil": 98,
+            "stool": 0,
+            "water": 292
+          }
+        },
+        "nmi_tech_biome": 0.09545563191878492,
+        "predict_biome_from_tech": {
+          "acc_mean": 0.5287665250586733,
+          "acc_se": 0.00023016699613778315,
+          "balanced_acc_mean": 0.1392857142857143,
+          "balanced_acc_se": 0.0035714285714285696,
+          "chance": 0.5287664553876158,
+          "balanced_chance": 0.125,
+          "n": 4102,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "predict_tech_from_biome": {
+          "acc_mean": 0.7006304031371616,
+          "acc_se": 0.007831966645730853,
+          "balanced_acc_mean": 0.6915087420217638,
+          "balanced_acc_se": 0.00824982258170542,
+          "chance": 0.5355923939541687,
+          "balanced_chance": 0.5,
+          "n": 4102,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "note": "NMI\u22480 and both directional probes\u2248chance => tech and biome are separable, invariance is well-posed. High NMI / high directional acc => confounded, so perfect tech-invariance is IMPOSSIBLE without losing biome (the ceiling)."
+      },
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9586693548387096,
+          "acc_se": 0.003981535818171662,
+          "balanced_acc_mean": 0.9586856074390904,
+          "balanced_acc_se": 0.003983945272651536,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.896774193548387,
+          "acc_se": 0.0014112903225806477,
+          "balanced_acc_mean": 0.896899370964426,
+          "balanced_acc_se": 0.0013938798215780911,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9379032258064516,
+          "acc_se": 0.004944656640496264,
+          "balanced_acc_mean": 0.9380121152544374,
+          "balanced_acc_se": 0.0049277268823316065,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8678018528953763,
+          "acc_se": 0.005414274367278623,
+          "balanced_acc_mean": 0.8372797940669214,
+          "balanced_acc_se": 0.023243556265045116,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8355482643496386,
+          "acc_se": 0.0056542634183144895,
+          "balanced_acc_mean": 0.741043053792634,
+          "balanced_acc_se": 0.036447164309001204,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8601697174607214,
+          "acc_se": 0.006483497030432842,
+          "balanced_acc_mean": 0.7937392661216569,
+          "balanced_acc_se": 0.023639362681230625,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9794354838709678,
+          "acc_se": 0.0017919746809104016,
+          "balanced_acc_mean": 0.9794346504119902,
+          "balanced_acc_se": 0.0017814676478589682,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.9538306451612903,
+          "acc_se": 0.003113597824895261,
+          "balanced_acc_mean": 0.9538656936095513,
+          "balanced_acc_se": 0.003107427525223956,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9530241935483872,
+          "acc_se": 0.0051163619114715795,
+          "balanced_acc_mean": 0.9530392765477854,
+          "balanced_acc_se": 0.005123787898658011,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8852810547809913,
+          "acc_se": 0.004159831241404425,
+          "balanced_acc_mean": 0.8361956138933685,
+          "balanced_acc_se": 0.02441218357871212,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8601712322541945,
+          "acc_se": 0.003868728954527396,
+          "balanced_acc_mean": 0.7686274203644515,
+          "balanced_acc_se": 0.027050360101133347,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8623876780639728,
+          "acc_se": 0.005943037914303111,
+          "balanced_acc_mean": 0.7916513322826371,
+          "balanced_acc_se": 0.0304811044508882,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 0.0,
+        "seed": 0,
+        "tag": "techinv_vicreg_c0_s0"
+      }
+    },
+    {
+      "n_samples": 4960,
+      "per_class_cap": 2500,
+      "strategy_counts": {
+        "amplicon": 2461,
+        "wgs": 2499
+      },
+      "n_with_biome": 4062,
+      "biome_counts": {
+        "feces": 313,
+        "gut": 2163,
+        "oral": 10,
+        "plant": 141,
+        "skin": 151,
+        "soil": 374,
+        "stool": 1,
+        "water": 909
+      },
+      "confounding": {
+        "n_with_both": 4102,
+        "crosstab_strat_x_biome": {
+          "amplicon": {
+            "feces": 123,
+            "gut": 696,
+            "oral": 10,
+            "plant": 148,
+            "skin": 13,
+            "soil": 295,
+            "stool": 1,
+            "water": 619
+          },
+          "wgs": {
+            "feces": 190,
+            "gut": 1473,
+            "oral": 0,
+            "plant": 6,
+            "skin": 138,
+            "soil": 98,
+            "stool": 0,
+            "water": 292
+          }
+        },
+        "nmi_tech_biome": 0.09545563191878492,
+        "predict_biome_from_tech": {
+          "acc_mean": 0.5287665250586733,
+          "acc_se": 0.00023016699613778315,
+          "balanced_acc_mean": 0.1392857142857143,
+          "balanced_acc_se": 0.0035714285714285696,
+          "chance": 0.5287664553876158,
+          "balanced_chance": 0.125,
+          "n": 4102,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "predict_tech_from_biome": {
+          "acc_mean": 0.7006304031371616,
+          "acc_se": 0.007831966645730853,
+          "balanced_acc_mean": 0.6915087420217638,
+          "balanced_acc_se": 0.00824982258170542,
+          "chance": 0.5355923939541687,
+          "balanced_chance": 0.5,
+          "n": 4102,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "note": "NMI\u22480 and both directional probes\u2248chance => tech and biome are separable, invariance is well-posed. High NMI / high directional acc => confounded, so perfect tech-invariance is IMPOSSIBLE without losing biome (the ceiling)."
+      },
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9602822580645161,
+          "acc_se": 0.001980532530684334,
+          "balanced_acc_mean": 0.9603234294245245,
+          "balanced_acc_se": 0.0019869027460782825,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.896774193548387,
+          "acc_se": 0.0014112903225806477,
+          "balanced_acc_mean": 0.896899370964426,
+          "balanced_acc_se": 0.0013938798215780911,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9379032258064516,
+          "acc_se": 0.004944656640496264,
+          "balanced_acc_mean": 0.9380121152544374,
+          "balanced_acc_se": 0.0049277268823316065,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8638582395676172,
+          "acc_se": 0.004760372803697765,
+          "balanced_acc_mean": 0.8282646093893833,
+          "balanced_acc_se": 0.026185373589644886,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8355482643496386,
+          "acc_se": 0.0056542634183144895,
+          "balanced_acc_mean": 0.741043053792634,
+          "balanced_acc_se": 0.036447164309001204,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8601697174607214,
+          "acc_se": 0.006483497030432842,
+          "balanced_acc_mean": 0.7937392661216569,
+          "balanced_acc_se": 0.023639362681230625,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9804435483870968,
+          "acc_se": 0.0017047917868233686,
+          "balanced_acc_mean": 0.9804281807699239,
+          "balanced_acc_se": 0.0016894635100909846,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.9538306451612903,
+          "acc_se": 0.003113597824895261,
+          "balanced_acc_mean": 0.9538656936095513,
+          "balanced_acc_se": 0.003107427525223956,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.9530241935483872,
+          "acc_se": 0.0051163619114715795,
+          "balanced_acc_mean": 0.9530392765477854,
+          "balanced_acc_se": 0.005123787898658011,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8862623379928382,
+          "acc_se": 0.0012795333770236378,
+          "balanced_acc_mean": 0.8262432447924338,
+          "balanced_acc_se": 0.020602553974769008,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "random_encoder": {
+          "acc_mean": 0.8601712322541945,
+          "acc_se": 0.003868728954527396,
+          "balanced_acc_mean": 0.7686274203644515,
+          "balanced_acc_se": 0.027050360101133347,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        },
+        "raw_meanpool": {
+          "acc_mean": 0.8623876780639728,
+          "acc_se": 0.005943037914303111,
+          "balanced_acc_mean": 0.7916513322826371,
+          "balanced_acc_se": 0.0304811044508882,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 0.0,
+        "seed": 2,
+        "tag": "techinv_vicreg_c0_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9596774193548386,
+          "acc_se": 0.004519458018439495,
+          "balanced_acc_mean": 0.9596807980974564,
+          "balanced_acc_se": 0.004532410218869492,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.971774193548387,
+          "acc_se": 0.0031070635095609886,
+          "balanced_acc_mean": 0.9717440978495523,
+          "balanced_acc_se": 0.003117911738191447,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8628748356449082,
+          "acc_se": 0.004098448550563612,
+          "balanced_acc_mean": 0.7930402390213284,
+          "balanced_acc_se": 0.024160737410977,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.883558128684735,
+          "acc_se": 0.006083085468072278,
+          "balanced_acc_mean": 0.8241762946011912,
+          "balanced_acc_se": 0.03224020387920504,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 1.0,
+        "seed": 2,
+        "tag": "techinv_vicreg_c1p0_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9560483870967742,
+          "acc_se": 0.0025819049344487288,
+          "balanced_acc_mean": 0.9560404907045245,
+          "balanced_acc_se": 0.002570442990989483,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.977016129032258,
+          "acc_se": 0.002415150917482038,
+          "balanced_acc_mean": 0.9769883321054286,
+          "balanced_acc_se": 0.0024166175371775713,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8638658135349827,
+          "acc_se": 0.006453942542526859,
+          "balanced_acc_mean": 0.8187132715365589,
+          "balanced_acc_se": 0.03494963917751056,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8840477099352275,
+          "acc_se": 0.0016142823348644908,
+          "balanced_acc_mean": 0.8257524942361762,
+          "balanced_acc_se": 0.03355677816163918,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 1.0,
+        "seed": 5,
+        "tag": "techinv_vicreg_c1p0_s5"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9487903225806452,
+          "acc_se": 0.002194711800108589,
+          "balanced_acc_mean": 0.948795420700072,
+          "balanced_acc_se": 0.0021848846454876523,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9776209677419354,
+          "acc_se": 0.002712424203039056,
+          "balanced_acc_mean": 0.9776082565764785,
+          "balanced_acc_se": 0.002696241871904133,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8643532740746126,
+          "acc_se": 0.00550301873566913,
+          "balanced_acc_mean": 0.8178338271956432,
+          "balanced_acc_se": 0.03417151058085384,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8751849562830604,
+          "acc_se": 0.005469048619221201,
+          "balanced_acc_mean": 0.8152127317223343,
+          "balanced_acc_se": 0.0336405270679848,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 1.0,
+        "seed": 4,
+        "tag": "techinv_vicreg_c1p0_s4"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9526209677419356,
+          "acc_se": 0.0040823501474428515,
+          "balanced_acc_mean": 0.9526063100788889,
+          "balanced_acc_se": 0.0040801460010205185,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.970766129032258,
+          "acc_se": 0.002231445929554302,
+          "balanced_acc_mean": 0.9707351433551977,
+          "balanced_acc_se": 0.002219325906053411,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8584470943231601,
+          "acc_se": 0.0062005612261263,
+          "balanced_acc_mean": 0.7824819348906922,
+          "balanced_acc_se": 0.038988400532478824,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8724801410575681,
+          "acc_se": 0.005759235461526628,
+          "balanced_acc_mean": 0.8042341522895076,
+          "balanced_acc_se": 0.03431028589363012,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 3.0,
+        "seed": 5,
+        "tag": "techinv_vicreg_c3p0_s5"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.952217741935484,
+          "acc_se": 0.0030675653336094634,
+          "balanced_acc_mean": 0.9522393453937343,
+          "balanced_acc_se": 0.003045186697274033,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9752016129032258,
+          "acc_se": 0.0019285409747690394,
+          "balanced_acc_mean": 0.9751769610495252,
+          "balanced_acc_se": 0.0019211551422899855,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.854999727337175,
+          "acc_se": 0.0030722374635488913,
+          "balanced_acc_mean": 0.8216015595568719,
+          "balanced_acc_se": 0.01714936722817489,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8810956804149322,
+          "acc_se": 0.004309545357189035,
+          "balanced_acc_mean": 0.8245260298850038,
+          "balanced_acc_se": 0.036339379975957486,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 1.0,
+        "seed": 1,
+        "tag": "techinv_vicreg_c1p0_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9556451612903226,
+          "acc_se": 0.00272364033994079,
+          "balanced_acc_mean": 0.9556433766360207,
+          "balanced_acc_se": 0.0027302216688264262,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9762096774193548,
+          "acc_se": 0.002861909186810151,
+          "balanced_acc_mean": 0.9761911371614417,
+          "balanced_acc_se": 0.002868854946909834,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8471206805664115,
+          "acc_se": 0.0056762710907008644,
+          "balanced_acc_mean": 0.765325362286309,
+          "balanced_acc_se": 0.03339127008228146,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.873216633644169,
+          "acc_se": 0.005259006291102791,
+          "balanced_acc_mean": 0.8081174181620167,
+          "balanced_acc_se": 0.0352400706189218,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 3.0,
+        "seed": 0,
+        "tag": "techinv_vicreg_c3p0_s0"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9556451612903224,
+          "acc_se": 0.002208558699617608,
+          "balanced_acc_mean": 0.955667342990868,
+          "balanced_acc_se": 0.0022209314206011062,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9741935483870968,
+          "acc_se": 0.0017047917868233547,
+          "balanced_acc_mean": 0.9741696788851371,
+          "balanced_acc_se": 0.001703602907554831,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8650909784959918,
+          "acc_se": 0.0021550828911264088,
+          "balanced_acc_mean": 0.8087372641472802,
+          "balanced_acc_se": 0.03478623772498664,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8835611582716814,
+          "acc_se": 0.007586728405339715,
+          "balanced_acc_mean": 0.8411031561812662,
+          "balanced_acc_se": 0.03349990799986104,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 1.0,
+        "seed": 3,
+        "tag": "techinv_vicreg_c1p0_s3"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.944758064516129,
+          "acc_se": 0.0028583562255560125,
+          "balanced_acc_mean": 0.9447332654259524,
+          "balanced_acc_se": 0.0028538937732597346,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9723790322580644,
+          "acc_se": 0.002398261543018213,
+          "balanced_acc_mean": 0.972359521985973,
+          "balanced_acc_se": 0.0023871956952090647,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8522906706899581,
+          "acc_se": 0.0029234648465783167,
+          "balanced_acc_mean": 0.7768016376447824,
+          "balanced_acc_se": 0.0284019100428156,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8778931040541933,
+          "acc_se": 0.003989965795250259,
+          "balanced_acc_mean": 0.8191231174629221,
+          "balanced_acc_se": 0.03326165179313148,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 3.0,
+        "seed": 4,
+        "tag": "techinv_vicreg_c3p0_s4"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9502016129032258,
+          "acc_se": 0.003412562677381198,
+          "balanced_acc_mean": 0.9501926265631744,
+          "balanced_acc_se": 0.003412924327755102,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9705645161290322,
+          "acc_se": 0.001122533137667353,
+          "balanced_acc_mean": 0.9705412233923807,
+          "balanced_acc_se": 0.001113805884793477,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8515520573924951,
+          "acc_se": 0.005012434925401404,
+          "balanced_acc_mean": 0.8134738397706519,
+          "balanced_acc_se": 0.0260658712298595,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8717384981731591,
+          "acc_se": 0.003117561614772934,
+          "balanced_acc_mean": 0.8061159492578996,
+          "balanced_acc_se": 0.034129700772396146,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 3.0,
+        "seed": 1,
+        "tag": "techinv_vicreg_c3p0_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9379032258064516,
+          "acc_se": 0.002716168061553931,
+          "balanced_acc_mean": 0.9378857335178612,
+          "balanced_acc_se": 0.002678911554714024,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.970766129032258,
+          "acc_se": 0.003433344025388379,
+          "balanced_acc_mean": 0.970770091161065,
+          "balanced_acc_se": 0.0034206696397247713,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8574594489787263,
+          "acc_se": 0.002503758962059814,
+          "balanced_acc_mean": 0.7750132308518959,
+          "balanced_acc_se": 0.04771563127927381,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8793694217730355,
+          "acc_se": 0.0017894554778359621,
+          "balanced_acc_mean": 0.8323830418424387,
+          "balanced_acc_se": 0.038974751350421485,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 0.0,
+        "seed": 0,
+        "tag": "techinv_bcs_c0_s0"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9481854838709676,
+          "acc_se": 0.0036707946483937708,
+          "balanced_acc_mean": 0.9481828013420597,
+          "balanced_acc_se": 0.0036669094343878502,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9723790322580644,
+          "acc_se": 0.0018201078714987805,
+          "balanced_acc_mean": 0.9723440749009026,
+          "balanced_acc_se": 0.0018218201554762064,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8586915819897115,
+          "acc_se": 0.0061635653227944155,
+          "balanced_acc_mean": 0.8084376583547488,
+          "balanced_acc_se": 0.025092677362984515,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8702679366695145,
+          "acc_se": 0.010143374489179046,
+          "balanced_acc_mean": 0.8166037321200005,
+          "balanced_acc_se": 0.03456901911612067,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 3.0,
+        "seed": 3,
+        "tag": "techinv_vicreg_c3p0_s3"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9274193548387096,
+          "acc_se": 0.0024067210456276706,
+          "balanced_acc_mean": 0.9274715915513145,
+          "balanced_acc_se": 0.002408333652968734,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9568548387096774,
+          "acc_se": 0.0037093486880996275,
+          "balanced_acc_mean": 0.9568831564545672,
+          "balanced_acc_se": 0.0036625277950338036,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8325950229945649,
+          "acc_se": 0.00390662322225765,
+          "balanced_acc_mean": 0.6984909254661834,
+          "balanced_acc_se": 0.035730078307114284,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8564781657668792,
+          "acc_se": 0.006189138482282872,
+          "balanced_acc_mean": 0.7458700062368704,
+          "balanced_acc_se": 0.033133369063940196,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 10.0,
+        "seed": 4,
+        "tag": "techinv_vicreg_c10p0_s4"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9342741935483871,
+          "acc_se": 0.004501434185839941,
+          "balanced_acc_mean": 0.9342426325432408,
+          "balanced_acc_se": 0.004489572747042704,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9683467741935484,
+          "acc_se": 0.0016129032258064403,
+          "balanced_acc_mean": 0.9683184709166681,
+          "balanced_acc_se": 0.0015992184425742445,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8537688061609681,
+          "acc_se": 0.005399431721760274,
+          "balanced_acc_mean": 0.7658096777761557,
+          "balanced_acc_se": 0.0396334864263014,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8741997346081835,
+          "acc_se": 0.003147971196743626,
+          "balanced_acc_mean": 0.7923467693036055,
+          "balanced_acc_se": 0.030733248664970323,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 0.0,
+        "seed": 2,
+        "tag": "techinv_bcs_c0_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9366935483870968,
+          "acc_se": 0.002655633038774098,
+          "balanced_acc_mean": 0.9367060240899352,
+          "balanced_acc_se": 0.0026599604405782708,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.970766129032258,
+          "acc_se": 0.0027236403399407906,
+          "balanced_acc_mean": 0.9707339524247128,
+          "balanced_acc_se": 0.0027224880049154417,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8549970007089234,
+          "acc_se": 0.004584096845315826,
+          "balanced_acc_mean": 0.7689100253045751,
+          "balanced_acc_se": 0.036392223270811375,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8808490720375184,
+          "acc_se": 0.006046363401314006,
+          "balanced_acc_mean": 0.8125687221675971,
+          "balanced_acc_se": 0.03352668246856367,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 0.0,
+        "seed": 4,
+        "tag": "techinv_bcs_c0_s4"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9360887096774194,
+          "acc_se": 0.00558180169351093,
+          "balanced_acc_mean": 0.9360763779442987,
+          "balanced_acc_se": 0.0055820414381819936,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9731854838709678,
+          "acc_se": 0.002440265813893172,
+          "balanced_acc_mean": 0.9731855494428558,
+          "balanced_acc_se": 0.0024342714933692777,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8542586903701549,
+          "acc_se": 0.002688773391889803,
+          "balanced_acc_mean": 0.7499580568999278,
+          "balanced_acc_se": 0.03064864899291979,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8801098528226661,
+          "acc_se": 0.0052505581259747035,
+          "balanced_acc_mean": 0.8037327503415475,
+          "balanced_acc_se": 0.030735435578379544,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 0.0,
+        "seed": 5,
+        "tag": "techinv_bcs_c0_s5"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9272177419354838,
+          "acc_se": 0.0030140960459125,
+          "balanced_acc_mean": 0.9272434906852574,
+          "balanced_acc_se": 0.003018523991396191,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9679435483870968,
+          "acc_se": 0.0011669190426199826,
+          "balanced_acc_mean": 0.9679241619041774,
+          "balanced_acc_se": 0.0011753876344081067,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8542605081223226,
+          "acc_se": 0.005147164828402197,
+          "balanced_acc_mean": 0.7736682681956226,
+          "balanced_acc_se": 0.03475413971479583,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8786335351038239,
+          "acc_se": 0.005443910621612403,
+          "balanced_acc_mean": 0.8005749300844085,
+          "balanced_acc_se": 0.03265739036223145,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 0.0,
+        "seed": 3,
+        "tag": "techinv_bcs_c0_s3"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9310483870967742,
+          "acc_se": 0.0038597156691686815,
+          "balanced_acc_mean": 0.9310511859583877,
+          "balanced_acc_se": 0.0038548819102839924,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9681451612903226,
+          "acc_se": 0.001515453263948892,
+          "balanced_acc_mean": 0.9681298870370567,
+          "balanced_acc_se": 0.0015103903332511705,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8527844933621751,
+          "acc_se": 0.005762148563434808,
+          "balanced_acc_mean": 0.7684156230652115,
+          "balanced_acc_se": 0.03362003593282635,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8756766582444151,
+          "acc_se": 0.003633086596360369,
+          "balanced_acc_mean": 0.7973412027576257,
+          "balanced_acc_se": 0.03208487144868206,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 0.0,
+        "seed": 1,
+        "tag": "techinv_bcs_c0_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9475806451612904,
+          "acc_se": 0.0026093103035372536,
+          "balanced_acc_mean": 0.9475905537092094,
+          "balanced_acc_se": 0.002606024049271006,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9711693548387096,
+          "acc_se": 0.0011755951400897868,
+          "balanced_acc_mean": 0.9711562696758481,
+          "balanced_acc_se": 0.0011717593079374647,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8530286780700319,
+          "acc_se": 0.004162798180355329,
+          "balanced_acc_mean": 0.8017985047298474,
+          "balanced_acc_se": 0.03726983138976525,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8702624834130115,
+          "acc_se": 0.0054453043087054195,
+          "balanced_acc_mean": 0.8200053534009122,
+          "balanced_acc_se": 0.034108037251835734,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 3.0,
+        "seed": 2,
+        "tag": "techinv_vicreg_c3p0_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9304435483870968,
+          "acc_se": 0.004069884927053712,
+          "balanced_acc_mean": 0.9305398377817328,
+          "balanced_acc_se": 0.004044015988026891,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9643145161290322,
+          "acc_se": 0.0016441034707963863,
+          "balanced_acc_mean": 0.9642981915413141,
+          "balanced_acc_se": 0.0016267346596323458,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8308705821048358,
+          "acc_se": 0.0025252565123283616,
+          "balanced_acc_mean": 0.6905955015364001,
+          "balanced_acc_se": 0.030001483171043786,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8545065105823472,
+          "acc_se": 0.004682930860564063,
+          "balanced_acc_mean": 0.7676917034680188,
+          "balanced_acc_se": 0.034577391449312836,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 10.0,
+        "seed": 0,
+        "tag": "techinv_vicreg_c10p0_s0"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9147177419354839,
+          "acc_se": 0.0018201078714987805,
+          "balanced_acc_mean": 0.9147545183805829,
+          "balanced_acc_se": 0.0018139506727857017,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9485887096774194,
+          "acc_se": 0.0023641208466852024,
+          "balanced_acc_mean": 0.9485958556470451,
+          "balanced_acc_se": 0.002387750241200806,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8311165845648605,
+          "acc_se": 0.004952397254631833,
+          "balanced_acc_mean": 0.7009067068592165,
+          "balanced_acc_se": 0.050886342573928246,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8618914317221991,
+          "acc_se": 0.0016996904444593819,
+          "balanced_acc_mean": 0.7401332288904541,
+          "balanced_acc_se": 0.04470370809014825,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 10.0,
+        "seed": 3,
+        "tag": "techinv_vicreg_c10p0_s3"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.926008064516129,
+          "acc_se": 0.003260274521934712,
+          "balanced_acc_mean": 0.9260459758151505,
+          "balanced_acc_se": 0.0032537516725743244,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9538306451612903,
+          "acc_se": 0.002075731883263502,
+          "balanced_acc_mean": 0.9538409262067068,
+          "balanced_acc_se": 0.0020829683075255065,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8348105599282594,
+          "acc_se": 0.004562760094915183,
+          "balanced_acc_mean": 0.6990298667514664,
+          "balanced_acc_se": 0.029929552438632268,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8631256854440466,
+          "acc_se": 0.008386402977301966,
+          "balanced_acc_mean": 0.7423762173910589,
+          "balanced_acc_se": 0.029866430968285732,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 10.0,
+        "seed": 2,
+        "tag": "techinv_vicreg_c10p0_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.914516129032258,
+          "acc_se": 0.00425780485523041,
+          "balanced_acc_mean": 0.9146277687385524,
+          "balanced_acc_se": 0.004248241880676634,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9524193548387097,
+          "acc_se": 0.0027310921742225856,
+          "balanced_acc_mean": 0.9524206003788442,
+          "balanced_acc_se": 0.0027301156809082594,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.842192451481165,
+          "acc_se": 0.005759903586425721,
+          "balanced_acc_mean": 0.7075837187636591,
+          "balanced_acc_se": 0.02906023416753952,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8641069686558934,
+          "acc_se": 0.0073450954656226345,
+          "balanced_acc_mean": 0.7591680995414215,
+          "balanced_acc_se": 0.031097689521955504,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 10.0,
+        "seed": 5,
+        "tag": "techinv_vicreg_c10p0_s5"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9387096774193548,
+          "acc_se": 0.0025181443541929054,
+          "balanced_acc_mean": 0.9386580569572661,
+          "balanced_acc_se": 0.0025102206893217317,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9679435483870968,
+          "acc_se": 0.0009773548099629762,
+          "balanced_acc_mean": 0.9679046726577051,
+          "balanced_acc_se": 0.0009794446344621795,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.845395027841904,
+          "acc_se": 0.003240150731389004,
+          "balanced_acc_mean": 0.7396934895835903,
+          "balanced_acc_se": 0.03203702128702815,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8729703282254497,
+          "acc_se": 0.005055896872534348,
+          "balanced_acc_mean": 0.794207799129624,
+          "balanced_acc_se": 0.033202222020970805,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 0.3,
+        "seed": 0,
+        "tag": "techinv_bcs_c0p3_s0"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9205645161290322,
+          "acc_se": 0.0037502167818020725,
+          "balanced_acc_mean": 0.920643559808811,
+          "balanced_acc_se": 0.0037376556029951337,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9633064516129032,
+          "acc_se": 0.0026594568464259815,
+          "balanced_acc_mean": 0.9632880346421502,
+          "balanced_acc_se": 0.0026442618734990216,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8303803949369544,
+          "acc_se": 0.003178166580394618,
+          "balanced_acc_mean": 0.6407912265651918,
+          "balanced_acc_se": 0.029331867762949774,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8601663849150805,
+          "acc_se": 0.005334612819306866,
+          "balanced_acc_mean": 0.74284451536989,
+          "balanced_acc_se": 0.032900411538439964,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 10.0,
+        "seed": 1,
+        "tag": "techinv_vicreg_c10p0_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9377016129032258,
+          "acc_se": 0.006402598592016291,
+          "balanced_acc_mean": 0.9376801687479247,
+          "balanced_acc_se": 0.006417384840446215,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9653225806451612,
+          "acc_se": 0.004377832812622667,
+          "balanced_acc_mean": 0.9653055545811853,
+          "balanced_acc_se": 0.004384559146562146,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8542589933288497,
+          "acc_se": 0.0035806279264397798,
+          "balanced_acc_mean": 0.7775237660851466,
+          "balanced_acc_se": 0.038283445513895856,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.872972448936312,
+          "acc_se": 0.00786776240479708,
+          "balanced_acc_mean": 0.8110952456119808,
+          "balanced_acc_se": 0.04001565347540475,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 0.3,
+        "seed": 1,
+        "tag": "techinv_bcs_c0p3_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9306451612903226,
+          "acc_se": 0.0033645804976368135,
+          "balanced_acc_mean": 0.9306544612171621,
+          "balanced_acc_se": 0.0033578596102425314,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.964516129032258,
+          "acc_se": 0.0021479108621635713,
+          "balanced_acc_mean": 0.9644831335059175,
+          "balanced_acc_se": 0.002144918380190541,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8483534194947862,
+          "acc_se": 0.004570709386114823,
+          "balanced_acc_mean": 0.74930049129334,
+          "balanced_acc_se": 0.03200504273327154,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8653375868734056,
+          "acc_se": 0.005167032354453836,
+          "balanced_acc_mean": 0.7966130776999913,
+          "balanced_acc_se": 0.034360198915691434,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 0.3,
+        "seed": 4,
+        "tag": "techinv_bcs_c0p3_s4"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9316532258064516,
+          "acc_se": 0.003999361779209147,
+          "balanced_acc_mean": 0.9316296588361339,
+          "balanced_acc_se": 0.003995731149051271,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9618951612903226,
+          "acc_se": 0.0026170876987393512,
+          "balanced_acc_mean": 0.9618591783477903,
+          "balanced_acc_se": 0.0026197833285501204,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8554887026702781,
+          "acc_se": 0.003464113991269898,
+          "balanced_acc_mean": 0.7474826480754201,
+          "balanced_acc_se": 0.027289124211558213,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8695214464459916,
+          "acc_se": 0.006420555186073419,
+          "balanced_acc_mean": 0.7858214941795019,
+          "balanced_acc_se": 0.015070278890742235,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 0.3,
+        "seed": 3,
+        "tag": "techinv_bcs_c0p3_s3"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9383064516129032,
+          "acc_se": 0.004209801011657479,
+          "balanced_acc_mean": 0.938303219033922,
+          "balanced_acc_se": 0.004216850060531069,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9663306451612904,
+          "acc_se": 0.003615004249403465,
+          "balanced_acc_mean": 0.9663112343719746,
+          "balanced_acc_se": 0.0036244906767905313,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8498294342549337,
+          "acc_se": 0.0036758902101282605,
+          "balanced_acc_mean": 0.7603632398928506,
+          "balanced_acc_se": 0.0318450584275537,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8660765031295632,
+          "acc_se": 0.00412084853520006,
+          "balanced_acc_mean": 0.7845242246064164,
+          "balanced_acc_se": 0.03329554304803209,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 0.3,
+        "seed": 2,
+        "tag": "techinv_bcs_c0p3_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9205645161290323,
+          "acc_se": 0.0011669190426199885,
+          "balanced_acc_mean": 0.9206443496600881,
+          "balanced_acc_se": 0.001146616769516999,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9564516129032258,
+          "acc_se": 0.001474671253863684,
+          "balanced_acc_mean": 0.9564783241642836,
+          "balanced_acc_se": 0.0014690586692027163,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8439208308339241,
+          "acc_se": 0.005041061182409729,
+          "balanced_acc_mean": 0.7488730052321844,
+          "balanced_acc_se": 0.02464124785145694,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8658323184217064,
+          "acc_se": 0.005102318918492009,
+          "balanced_acc_mean": 0.782483053013083,
+          "balanced_acc_se": 0.03151933195055313,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 1.0,
+        "seed": 3,
+        "tag": "techinv_bcs_c1p0_s3"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9245967741935484,
+          "acc_se": 0.0028760771406627136,
+          "balanced_acc_mean": 0.9246130322949035,
+          "balanced_acc_se": 0.002868039959457015,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9616935483870968,
+          "acc_se": 0.002797265509175736,
+          "balanced_acc_mean": 0.9616445672889009,
+          "balanced_acc_se": 0.002798775372050439,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.840473463847939,
+          "acc_se": 0.004319256529529776,
+          "balanced_acc_mean": 0.7424033080508956,
+          "balanced_acc_se": 0.033030167297531984,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8697710844103514,
+          "acc_se": 0.0064682607835697195,
+          "balanced_acc_mean": 0.7841242388030703,
+          "balanced_acc_se": 0.03216430133675742,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 1.0,
+        "seed": 1,
+        "tag": "techinv_bcs_c1p0_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9286290322580644,
+          "acc_se": 0.0019495039925215324,
+          "balanced_acc_mean": 0.9286650530632994,
+          "balanced_acc_se": 0.0019524797150822723,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9622983870967742,
+          "acc_se": 0.002128902427615213,
+          "balanced_acc_mean": 0.9622721635292221,
+          "balanced_acc_se": 0.0021256459367035856,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8498276165027662,
+          "acc_se": 0.0037929468316920856,
+          "balanced_acc_mean": 0.738969204649736,
+          "balanced_acc_se": 0.03547932431504791,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8665718405952532,
+          "acc_se": 0.009945225829402455,
+          "balanced_acc_mean": 0.7651863896028631,
+          "balanced_acc_se": 0.032679499831633096,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 1.0,
+        "seed": 4,
+        "tag": "techinv_bcs_c1p0_s4"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9094758064516129,
+          "acc_se": 0.004753962146190152,
+          "balanced_acc_mean": 0.9094578396060579,
+          "balanced_acc_se": 0.004769386419481203,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9592741935483872,
+          "acc_se": 0.003067565333609451,
+          "balanced_acc_mean": 0.959257999169235,
+          "balanced_acc_se": 0.0030605514885700957,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8471188628142439,
+          "acc_se": 0.003134336246256844,
+          "balanced_acc_mean": 0.7784687346300103,
+          "balanced_acc_se": 0.025564370934458427,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8690294415259423,
+          "acc_se": 0.0012815172477950775,
+          "balanced_acc_mean": 0.7978387600890062,
+          "balanced_acc_se": 0.036225466976761066,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 1.0,
+        "seed": 0,
+        "tag": "techinv_bcs_c1p0_s0"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.935282258064516,
+          "acc_se": 0.004124450109975556,
+          "balanced_acc_mean": 0.9352674461209892,
+          "balanced_acc_se": 0.004126299506247592,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9673387096774194,
+          "acc_se": 0.0026015096573717617,
+          "balanced_acc_mean": 0.9673237840512238,
+          "balanced_acc_se": 0.0026090114538563644,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8537669884088004,
+          "acc_se": 0.003991165459063836,
+          "balanced_acc_mean": 0.758035115701513,
+          "balanced_acc_se": 0.030430213778124313,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8673077272644647,
+          "acc_se": 0.006480491290304131,
+          "balanced_acc_mean": 0.8031031594687118,
+          "balanced_acc_se": 0.03859230238364095,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 0.3,
+        "seed": 5,
+        "tag": "techinv_bcs_c0p3_s5"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9133064516129032,
+          "acc_se": 0.0029904026157643792,
+          "balanced_acc_mean": 0.9134212534767915,
+          "balanced_acc_se": 0.003004821184286352,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9504032258064516,
+          "acc_se": 0.0038702326250912196,
+          "balanced_acc_mean": 0.9503730914194026,
+          "balanced_acc_se": 0.0038812039012688297,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8439171953295889,
+          "acc_se": 0.0032194968044993054,
+          "balanced_acc_mean": 0.7268663329757398,
+          "balanced_acc_se": 0.029044651486479764,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8584470943231599,
+          "acc_se": 0.006329893896006076,
+          "balanced_acc_mean": 0.7514820850022392,
+          "balanced_acc_se": 0.0338521788037704,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 3.0,
+        "seed": 2,
+        "tag": "techinv_bcs_c3p0_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8967741935483872,
+          "acc_se": 0.006781809754658943,
+          "balanced_acc_mean": 0.8969273792030703,
+          "balanced_acc_se": 0.006741747014370722,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.942741935483871,
+          "acc_se": 0.003210016800018288,
+          "balanced_acc_mean": 0.9427076846679722,
+          "balanced_acc_se": 0.0032127155910714835,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8348078333000079,
+          "acc_se": 0.004241856437191571,
+          "balanced_acc_mean": 0.6981010478271693,
+          "balanced_acc_se": 0.02811964272673757,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8591863135380123,
+          "acc_se": 0.004383632196605809,
+          "balanced_acc_mean": 0.7700186182513222,
+          "balanced_acc_se": 0.02401486174883639,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 3.0,
+        "seed": 0,
+        "tag": "techinv_bcs_c3p0_s0"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9028225806451614,
+          "acc_se": 0.004492395152249443,
+          "balanced_acc_mean": 0.9028843137618432,
+          "balanced_acc_se": 0.004482405781517603,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9532258064516128,
+          "acc_se": 0.004248247480989005,
+          "balanced_acc_mean": 0.9532235212885244,
+          "balanced_acc_se": 0.004259013316591089,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8412099564345399,
+          "acc_se": 0.003944310871694276,
+          "balanced_acc_mean": 0.731007446462528,
+          "balanced_acc_se": 0.021181446671226463,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.863125382485352,
+          "acc_se": 0.0033405075100936374,
+          "balanced_acc_mean": 0.7723003570448823,
+          "balanced_acc_se": 0.02504399174227353,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 3.0,
+        "seed": 4,
+        "tag": "techinv_bcs_c3p0_s4"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8883064516129032,
+          "acc_se": 0.00587278696114093,
+          "balanced_acc_mean": 0.8884628199521455,
+          "balanced_acc_se": 0.005866435593440479,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9443548387096776,
+          "acc_se": 0.002768050447126204,
+          "balanced_acc_mean": 0.9443731252871679,
+          "balanced_acc_se": 0.002759496752542667,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8345687988899593,
+          "acc_se": 0.00507658277459133,
+          "balanced_acc_mean": 0.7220257441445013,
+          "balanced_acc_se": 0.019720715595812392,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8574612667308938,
+          "acc_se": 0.0037243047126890192,
+          "balanced_acc_mean": 0.761357873180596,
+          "balanced_acc_se": 0.02780377583156465,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 3.0,
+        "seed": 1,
+        "tag": "techinv_bcs_c3p0_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9173387096774193,
+          "acc_se": 0.0027236403399407776,
+          "balanced_acc_mean": 0.9174618231466148,
+          "balanced_acc_se": 0.0027108299802667724,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9491935483870968,
+          "acc_se": 0.0029493425077273825,
+          "balanced_acc_mean": 0.9492299559524067,
+          "balanced_acc_se": 0.002953500245235258,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8308714909809197,
+          "acc_se": 0.004714960710634334,
+          "balanced_acc_mean": 0.7065202104101057,
+          "balanced_acc_se": 0.02995145979937705,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8488457273735299,
+          "acc_se": 0.004736818425233679,
+          "balanced_acc_mean": 0.6971801862076606,
+          "balanced_acc_se": 0.03496426930805712,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 10.0,
+        "seed": 2,
+        "tag": "techinv_bcs_c10p0_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9346774193548388,
+          "acc_se": 0.0035839493618207946,
+          "balanced_acc_mean": 0.9346853786135572,
+          "balanced_acc_se": 0.003590517964209569,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9641129032258065,
+          "acc_se": 0.0025819049344487166,
+          "balanced_acc_mean": 0.964072587279475,
+          "balanced_acc_se": 0.002580624754479691,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8466265549355001,
+          "acc_se": 0.003437983275572943,
+          "balanced_acc_mean": 0.7276447696860773,
+          "balanced_acc_se": 0.04259710130518646,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8660771090469526,
+          "acc_se": 0.0075247069142392745,
+          "balanced_acc_mean": 0.7490326688349356,
+          "balanced_acc_se": 0.05032700876821271,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 1.0,
+        "seed": 5,
+        "tag": "techinv_bcs_c1p0_s5"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9036290322580645,
+          "acc_se": 0.0024609991160753544,
+          "balanced_acc_mean": 0.9037375596060937,
+          "balanced_acc_se": 0.0024633472129413224,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9445564516129032,
+          "acc_se": 0.002489735692586368,
+          "balanced_acc_mean": 0.9445385556118586,
+          "balanced_acc_se": 0.002491710818920719,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8382564121207714,
+          "acc_se": 0.003012336902123213,
+          "balanced_acc_mean": 0.6929092403331534,
+          "balanced_acc_se": 0.030154119958622966,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8579487272705238,
+          "acc_se": 0.003651492318105215,
+          "balanced_acc_mean": 0.7595281747775692,
+          "balanced_acc_se": 0.03083328354243008,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 3.0,
+        "seed": 3,
+        "tag": "techinv_bcs_c3p0_s3"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8993951612903224,
+          "acc_se": 0.004785918334866621,
+          "balanced_acc_mean": 0.8994758283598315,
+          "balanced_acc_se": 0.004809805458763821,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.933266129032258,
+          "acc_se": 0.0016065904688013365,
+          "balanced_acc_mean": 0.9333016037979751,
+          "balanced_acc_se": 0.0016610125953683732,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8264392052787523,
+          "acc_se": 0.005212550742358768,
+          "balanced_acc_mean": 0.664772648546435,
+          "balanced_acc_se": 0.03327094392419857,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8559834342185788,
+          "acc_se": 0.006060583917578383,
+          "balanced_acc_mean": 0.7926826653948162,
+          "balanced_acc_se": 0.031277008678743966,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 10.0,
+        "seed": 4,
+        "tag": "techinv_bcs_c10p0_s4"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8925403225806452,
+          "acc_se": 0.0031653867879249,
+          "balanced_acc_mean": 0.8927363454493544,
+          "balanced_acc_se": 0.003177012205907511,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9377016129032258,
+          "acc_se": 0.0015087328172475622,
+          "balanced_acc_mean": 0.9377710644627371,
+          "balanced_acc_se": 0.0014960829802124372,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8242233653863632,
+          "acc_se": 0.006650553187035322,
+          "balanced_acc_mean": 0.6770055465152153,
+          "balanced_acc_se": 0.027759426402617304,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8545016632432334,
+          "acc_se": 0.006434518286329598,
+          "balanced_acc_mean": 0.7335616640416479,
+          "balanced_acc_se": 0.030487306866634017,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 10.0,
+        "seed": 0,
+        "tag": "techinv_bcs_c10p0_s0"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9362903225806452,
+          "acc_se": 0.002100067203225778,
+          "balanced_acc_mean": 0.9363332651483478,
+          "balanced_acc_se": 0.0020921184782114826,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9544354838709678,
+          "acc_se": 0.002768050447126217,
+          "balanced_acc_mean": 0.9544238067916699,
+          "balanced_acc_se": 0.0027701181645782627,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8261965353643683,
+          "acc_se": 0.004022825724040795,
+          "balanced_acc_mean": 0.6857433375105835,
+          "balanced_acc_se": 0.026437266158991946,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8426908185338011,
+          "acc_se": 0.005790039333317434,
+          "balanced_acc_mean": 0.721386274543308,
+          "balanced_acc_se": 0.026996294833082544,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 10.0,
+        "seed": 5,
+        "tag": "techinv_bcs_c10p0_s5"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8752016129032258,
+          "acc_se": 0.004501434185839928,
+          "balanced_acc_mean": 0.8753372960799812,
+          "balanced_acc_se": 0.004527404017584785,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9304435483870968,
+          "acc_se": 0.004979471385172776,
+          "balanced_acc_mean": 0.9304630720039331,
+          "balanced_acc_se": 0.004976245977456577,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.816101648701216,
+          "acc_se": 0.0028280728260053727,
+          "balanced_acc_mean": 0.6329900323858728,
+          "balanced_acc_se": 0.03910205998057727,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8449087791370525,
+          "acc_se": 0.008207306269738233,
+          "balanced_acc_mean": 0.7370384553637153,
+          "balanced_acc_se": 0.024057496500094738,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 10.0,
+        "seed": 1,
+        "tag": "techinv_bcs_c10p0_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8852822580645162,
+          "acc_se": 0.004099737783802971,
+          "balanced_acc_mean": 0.885391252843258,
+          "balanced_acc_se": 0.004073916172886556,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9288306451612904,
+          "acc_se": 0.004089811043367107,
+          "balanced_acc_mean": 0.9288695189749541,
+          "balanced_acc_se": 0.004041571283670044,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8188107053484327,
+          "acc_se": 0.0028604234416451015,
+          "balanced_acc_mean": 0.6767682508093793,
+          "balanced_acc_se": 0.03333479571296971,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8522921854834312,
+          "acc_se": 0.004040278164842072,
+          "balanced_acc_mean": 0.7527458791085291,
+          "balanced_acc_se": 0.042296397735868844,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 10.0,
+        "seed": 3,
+        "tag": "techinv_bcs_c10p0_s3"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9320564516129032,
+          "acc_se": 0.00265945684642599,
+          "balanced_acc_mean": 0.9320983632397797,
+          "balanced_acc_se": 0.0026483213306093987,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9584677419354838,
+          "acc_se": 0.0036402157429975364,
+          "balanced_acc_mean": 0.9584596362434132,
+          "balanced_acc_se": 0.003647400451507703,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8375177988233083,
+          "acc_se": 0.0023456106933649403,
+          "balanced_acc_mean": 0.7002718899298033,
+          "balanced_acc_se": 0.025996372296163906,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8594301952871746,
+          "acc_se": 0.005902386654555704,
+          "balanced_acc_mean": 0.7449197809853491,
+          "balanced_acc_se": 0.024752765198787913,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 3.0,
+        "seed": 5,
+        "tag": "techinv_bcs_c3p0_s5"
+      }
+    }
+  ],
+  "summary": [
+    {
+      "loss": "bcs",
+      "coeff": 0.0,
+      "tech_balacc": {
+        "mean": 0.9338675741231635,
+        "se": 0.001643496374205794,
+        "n": 6
+      },
+      "biome_balacc": {
+        "mean": 0.766962480348898,
+        "se": 0.003679520349260974,
+        "n": 6
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9698436854810893,
+        "se": 0.0008517983484050234,
+        "n": 6
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.8064912360828704,
+        "se": 0.0058700437624052935,
+        "n": 6
+      }
+    },
+    {
+      "loss": "bcs",
+      "coeff": 0.3,
+      "tech_balacc": {
+        "mean": 0.9353655018188997,
+        "se": 0.0014258193671235343,
+        "n": 6
+      },
+      "biome_balacc": {
+        "mean": 0.7553997917719767,
+        "se": 0.005377798644877947,
+        "n": 6
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9655312595859661,
+        "se": 0.0008960707911595935,
+        "n": 6
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.7958941667827043,
+        "se": 0.00415185645365449,
+        "n": 6
+      }
+    },
+    {
+      "loss": "bcs",
+      "coeff": 1.0,
+      "tech_balacc": {
+        "mean": 0.9236131306475812,
+        "se": 0.004232625210438221,
+        "n": 5
+      },
+      "biome_balacc": {
+        "mean": 0.7472718044497807,
+        "se": 0.008525456617850369,
+        "n": 5
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9607451282862233,
+        "se": 0.0013158643723854208,
+        "n": 5
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.7757330220685916,
+        "se": 0.008452157738213817,
+        "n": 5
+      }
+    },
+    {
+      "loss": "bcs",
+      "coeff": 3.0,
+      "tech_balacc": {
+        "mean": 0.9062552815399539,
+        "se": 0.006165765225287103,
+        "n": 6
+      },
+      "biome_balacc": {
+        "mean": 0.7118636169454825,
+        "se": 0.006777121716421272,
+        "n": 6
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9489459357530565,
+        "se": 0.0025172496909389276,
+        "n": 6
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.7599344815403263,
+        "se": 0.0042960449219407474,
+        "n": 6
+      }
+    },
+    {
+      "loss": "bcs",
+      "coeff": 10.0,
+      "tech_balacc": {
+        "mean": 0.9011226351712313,
+        "se": 0.009114383243082117,
+        "n": 6
+      },
+      "biome_balacc": {
+        "mean": 0.6739666710295986,
+        "se": 0.009965141539455652,
+        "n": 6
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9390098369972794,
+        "se": 0.004289650418447863,
+        "n": 6
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.7390991874432795,
+        "se": 0.013119047263311938,
+        "n": 6
+      }
+    },
+    {
+      "loss": "vicreg",
+      "coeff": 0.0,
+      "tech_balacc": {
+        "mean": 0.9602577625950075,
+        "se": 0.000829282803665406,
+        "n": 6
+      },
+      "biome_balacc": {
+        "mean": 0.8294512105591542,
+        "se": 0.004384472034556085,
+        "n": 6
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9790814900986083,
+        "se": 0.000426803857342426,
+        "n": 6
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.8331079631475764,
+        "se": 0.006199282311413495,
+        "n": 6
+      }
+    },
+    {
+      "loss": "vicreg",
+      "coeff": 0.3,
+      "tech_balacc": {
+        "mean": 0.9512559114039355,
+        "se": 0.002018239097018044,
+        "n": 6
+      },
+      "biome_balacc": {
+        "mean": 0.8197036783873131,
+        "se": 0.0036852552868312854,
+        "n": 6
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9763565616277933,
+        "se": 0.001047516744471033,
+        "n": 6
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.8338096473516137,
+        "se": 0.005620038248866869,
+        "n": 6
+      }
+    },
+    {
+      "loss": "vicreg",
+      "coeff": 1.0,
+      "tech_balacc": {
+        "mean": 0.9539350177912357,
+        "se": 0.0016051160210372106,
+        "n": 6
+      },
+      "biome_balacc": {
+        "mean": 0.8030292764847508,
+        "se": 0.009912421036215511,
+        "n": 6
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9740597020903451,
+        "se": 0.0013763579502991787,
+        "n": 6
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.8210564223640394,
+        "se": 0.006135996502556652,
+        "n": 6
+      }
+    },
+    {
+      "loss": "vicreg",
+      "coeff": 3.0,
+      "tech_balacc": {
+        "mean": 0.9498248222925509,
+        "se": 0.0015847152127444763,
+        "n": 6
+      },
+      "biome_balacc": {
+        "mean": 0.7913864896128385,
+        "se": 0.007870185958233286,
+        "n": 6
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9722212284119572,
+        "se": 0.0008555581925081586,
+        "n": 6
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.8123666204488765,
+        "se": 0.0028590048216259366,
+        "n": 6
+      }
+    },
+    {
+      "loss": "vicreg",
+      "coeff": 10.0,
+      "tech_balacc": {
+        "mean": 0.9223472086793573,
+        "se": 0.0027519718276127775,
+        "n": 6
+      },
+      "biome_balacc": {
+        "mean": 0.6895663243236863,
+        "se": 0.01000417793787282,
+        "n": 6
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9565544608117712,
+        "se": 0.0025377541991968133,
+        "n": 6
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.7496806284829524,
+        "se": 0.004546689176305869,
+        "n": 6
+      }
+    }
+  ]
+}
