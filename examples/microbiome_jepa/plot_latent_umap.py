@@ -133,6 +133,60 @@ def _plot_tech_split(reps, strat_s, biome_s, biomes, bcolors, method, out):
     print(f"saved -> {out} (+ _coords.json)", flush=True)
 
 
+def _within_biome_tech_acc(X, y, seed=0):
+    """5-fold balanced tech-acc from the latent WITHIN one biome (chance=0.5).
+    High => technology still recoverable (leak); ~0.5 => technology scrubbed (invariant)."""
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.metrics import balanced_accuracy_score
+    from sklearn.model_selection import StratifiedKFold
+    from sklearn.preprocessing import StandardScaler
+    if len(set(y)) < 2 or min(np.bincount(y == y[0])) < 5:
+        return None
+    accs = []
+    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=seed)
+    for tr, te in skf.split(X, y):
+        sc = StandardScaler().fit(X[tr])
+        m = LogisticRegression(max_iter=2000).fit(sc.transform(X[tr]), y[tr])
+        accs.append(balanced_accuracy_score(y[te], m.predict(sc.transform(X[te]))))
+    return float(np.mean(accs))
+
+
+def _plot_tech_within_biome(reps, strat, biome, method, out, biomes_to_show=("gut", "water", "soil")):
+    """The clean invariance test: FIX the biome, then ask whether TECHNOLOGY is still visible.
+    Rows = biome (biology held constant), cols = encoder (baseline, DANN). Each panel = the
+    latent of that biome's samples, colored by technology (amplicon vs WGS), with a measured
+    within-biome tech balanced-acc (chance 0.5) in the title. Baseline: 2 colors separate +
+    high acc (tech leaks even at fixed biology). DANN: colors mixed + acc ~0.5 (tech invariant)."""
+    rows = [b for b in biomes_to_show]
+    cols = [n for n in reps if n.startswith("JEPA")]
+    tcolor = {"amplicon": "#1f77b4", "wgs": "#d62728"}
+    fig, axes = plt.subplots(len(rows), len(cols), figsize=(5.4 * len(cols), 4.6 * len(rows)),
+                             squeeze=False)
+    for r, b in enumerate(rows):
+        bm = biome == b
+        for c, name in enumerate(cols):
+            ax = axes[r][c]
+            X = reps[name][bm]
+            y = strat[bm]
+            acc = _within_biome_tech_acc(X, (y == "wgs").astype(int))
+            XY, used = _project(X, method)
+            for s in ["amplicon", "wgs"]:
+                m = y == s
+                if m.any():
+                    ax.scatter(XY[m, 0], XY[m, 1], s=10, alpha=0.6, c=[tcolor[s]], label=s, linewidths=0)
+            acc_str = f"tech bal-acc={acc:.2f}" if acc is not None else "tech acc n/a"
+            ax.set_title(f"{name}\nbiome={b} (n={int(bm.sum())}) — {acc_str} [{used}]", fontsize=9)
+            ax.set_xticks([]); ax.set_yticks([])
+            if r == 0 and c == len(cols) - 1:
+                ax.legend(markerscale=2, fontsize=8)
+    fig.suptitle("Invariance at FIXED biology: can technology still be seen within one biome?\n"
+                 "baseline: amplicon vs WGS separate (acc≫0.5, tech leaks) | "
+                 "DANN: mixed (acc→0.5, tech invariant)", fontsize=11)
+    fig.tight_layout(rect=[0, 0, 1, 0.95])
+    fig.savefig(out, dpi=130)
+    print(f"saved -> {out}", flush=True)
+
+
 def run(baseline=None, dann=None, fname="examples/microbiome_jepa/cfgs/layerA_real.yaml",
         data_dir=None, d_model=128, n_max=256, per_class_cap=1500, method="umap",
         max_points=4000, save_reps=None, from_reps=None, layout="compare",
@@ -167,6 +221,9 @@ def run(baseline=None, dann=None, fname="examples/microbiome_jepa/cfgs/layerA_re
 
     if layout == "tech_split":
         _plot_tech_split(reps, strat_s, biome_s, biomes, bcolors, method, out)
+        return
+    if layout == "tech_within_biome":
+        _plot_tech_within_biome(reps, strat_s, biome_s, method, out)
         return
 
     nrows = len(reps)
