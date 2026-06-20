@@ -25,19 +25,14 @@ import os
 
 import fire
 import numpy as np
-import torch
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from eb_jepa.architectures import SetTransformerEncoder
-from eb_jepa.datasets.microbiome.otu_data import (
-    build_otu_key_resolver, load_otu_rename_map, load_prokbert_embeddings)
-from eb_jepa.datasets.microbiome.transforms import PerDimZScore
-from eb_jepa.training_utils import load_config
-from examples.microbiome_jepa.tech_invariance import (
-    F, STRATEGIES, build_tokens, encode, load_runid_labels, raw_meanpool,
-    stream_labeled_communities)
+# NOTE: torch / eb_jepa imports are LAZY (inside _encode_reps / _load_encoder) so the
+# `--from_reps` projection path runs in a torch-free venv (e.g. an isolated umap venv).
+F = 385
+STRATEGIES = ["amplicon", "wgs"]
 
 
 def _project(X, method, seed=0):
@@ -54,6 +49,8 @@ def _project(X, method, seed=0):
 
 
 def _load_encoder(ckpt, cfg, dev):
+    import torch
+    from eb_jepa.architectures import SetTransformerEncoder
     enc = SetTransformerEncoder(token_dim=F, d_model=cfg.model.d_model, n_heads=cfg.model.n_heads,
                                 n_layers=cfg.model.n_layers, dim_feedforward=cfg.model.dim_feedforward,
                                 dropout=0.0, pool=cfg.model.get("pool", "mean")).to(dev)
@@ -65,6 +62,13 @@ def _load_encoder(ckpt, cfg, dev):
 
 
 def _encode_reps(baseline, dann, fname, data_dir, d_model, n_max, per_class_cap):
+    import torch
+    from eb_jepa.datasets.microbiome.otu_data import (
+        build_otu_key_resolver, load_otu_rename_map, load_prokbert_embeddings)
+    from eb_jepa.datasets.microbiome.transforms import PerDimZScore
+    from eb_jepa.training_utils import load_config
+    from examples.microbiome_jepa.tech_invariance import (
+        build_tokens, encode, load_runid_labels, raw_meanpool, stream_labeled_communities)
     dev = torch.device("cpu")
     mb = os.path.join(data_dir, "microbeatlas")
     cfg = load_config(fname, {"model.d_model": d_model}, quiet=True)
