@@ -1,0 +1,6 @@
+# Reproducible / large artifacts — not committed
+data/*.npz
+data/*.log
+data/*.parquet
+__pycache__/
+# keep results/ JSON + figure (small, are the deliverable evidence)
