@@ -28,7 +28,7 @@ from eb_jepa.training_utils import load_config
 from examples.microbiome_jepa.tech_invariance import (
     F, STRATEGIES, build_tokens, encode, load_runid_labels, probe, raw_meanpool,
     stream_labeled_communities)
-from examples.microbiome_jepa.tech_sweep import _tag, summarize, _print_tradeoff
+from examples.microbiome_jepa.tech_sweep import _csv, _tag, summarize, _print_tradeoff
 
 # globals filled in the parent before the pool forks (workers inherit via COW)
 _D = {}
@@ -91,9 +91,7 @@ def run(losses="vicreg,bcs", coeffs="0,0.3,1.0,3.0,10.0", seeds="0,1,2,3,4,5",
     data_dir = data_dir or os.path.join(os.environ.get("EBJEPA_DSETS", "."), "susagi", "data")
     ckpt_root = ckpt_root or os.path.join(work, "checkpoints/microbiome_jepa/tech_sweep")
     out_root = out_root or os.path.join(work, "checkpoints/microbiome_jepa/tech_sweep_eval")
-    losses = [s.strip() for s in str(losses).split(",") if s.strip()]
-    coeffs = [s.strip() for s in str(coeffs).split(",") if s.strip()]
-    seeds = [s.strip() for s in str(seeds).split(",") if s.strip()]
+    losses, coeffs, seeds = _csv(losses), _csv(coeffs), _csv(seeds)  # robust to fire tuple-parsing
     cfg = load_config(fname, {"model.d_model": d_model}, quiet=True)
     mb = os.path.join(data_dir, "microbeatlas")
 
