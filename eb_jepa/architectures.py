@@ -655,3 +655,68 @@ class InverseDynamicsModel(nn.Module):
         """
         combined_states = torch.cat([state_t, state_t_plus_1], dim=1)
         return self.model(combined_states)
+
+
+class _GradientReversalFn(torch.autograd.Function):
+    """Identity forward; on backward multiplies the upstream gradient by -lambda.
+
+    The DANN trick (Ganin & Lempitsky 2015): the adversary minimises its own loss
+    w.r.t. its head, but the *encoder* sees the NEGATED gradient, so it is pushed to
+    make the adversary FAIL — i.e. to remove the domain (here: sequencing-technology)
+    information from the representation.
+    """
+
+    @staticmethod
+    def forward(ctx, x, lambd):
+        ctx.lambd = float(lambd)
+        return x.view_as(x)
+
+    @staticmethod
+    def backward(ctx, grad_output):
+        return grad_output.neg() * ctx.lambd, None
+
+
+def grad_reverse(x, lambd: float = 1.0):
+    return _GradientReversalFn.apply(x, lambd)
+
+
+class TechAdversaryHead(nn.Module):
+    """DANN domain classifier over the FROZEN-graph-reversed community embedding.
+
+    Predicts the sequencing technology (e.g. amplicon vs WGS) from the encoder
+    output. Placed behind a gradient-reversal layer so that training it removes
+    technology-predictive information from the encoder. This is an ADVERSARY used
+    only at train time; the honest invariance metric is a fresh post-hoc probe on
+    the frozen encoder (see examples/microbiome_jepa/tech_invariance.py), never
+    this head.
+    """
+
+    def __init__(self, in_dim: int, n_classes: int, hidden_dim: Optional[int] = None,
+                 n_layers: int = 2, dropout: float = 0.0):
+        super().__init__()
+        h = hidden_dim or in_dim
+        layers = []
+        d = in_dim
+        for _ in range(max(1, n_layers) - 1):
+            layers += [nn.Linear(d, h), nn.BatchNorm1d(h), nn.ReLU(True)]
+            if dropout > 0:
+                layers.append(nn.Dropout(dropout))
+            d = h
+        layers.append(nn.Linear(d, n_classes))
+        self.net = nn.Sequential(*layers)
+        self.apply(init_module_weights)
+
+    def forward(self, feat, lambd: float = 1.0):
+        """feat: [B, D] community embedding. Returns logits [B, n_classes]."""
+        return self.net(grad_reverse(feat, lambd))
+
+
+def dann_lambda(progress: float, gamma: float = 10.0) -> float:
+    """The standard DANN schedule lambda(p) = 2/(1+exp(-gamma*p)) - 1, p in [0,1].
+
+    Ramps the reversal strength from 0 -> 1 over training so the adversary is
+    well-conditioned before it starts pushing the encoder (avoids early instability).
+    """
+    p = min(max(float(progress), 0.0), 1.0)
+    import math
+    return 2.0 / (1.0 + math.exp(-gamma * p)) - 1.0

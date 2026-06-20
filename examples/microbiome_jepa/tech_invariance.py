@@ -37,8 +37,13 @@ import fire
 import numpy as np
 import torch
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, balanced_accuracy_score
+from sklearn.metrics import (
+    accuracy_score,
+    balanced_accuracy_score,
+    normalized_mutual_info_score,
+)
 from sklearn.model_selection import StratifiedKFold
+from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 
 from eb_jepa.architectures import SetTransformerEncoder
@@ -217,14 +222,23 @@ def susagi_imposter_rep(tokens, masks, repo, ckpt_path, device, bs=128,
     return np.concatenate(reps, 0)
 
 
-def probe(X, y, seed=42):
-    """5-fold LogReg; returns acc + balanced acc + chance (majority)."""
+def _make_probe(kind):
+    if kind == "mlp":
+        return lambda: MLPClassifier(hidden_layer_sizes=(128,), max_iter=300, random_state=0)
+    return lambda: LogisticRegression(max_iter=2000, C=1.0)
+
+
+def probe(X, y, seed=42, kind="linear"):
+    """5-fold probe (LogReg or MLP); returns acc + balanced acc + chance (majority).
+
+    balanced_acc is the headline under class imbalance: it averages per-class recall, so
+    "drop to chance" means dropping to 1/n_classes (0.5 for the binary tech probe)."""
     y = np.asarray(y)
     skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=seed)
     accs, baccs = [], []
     for tr, te in skf.split(X, y):
         sc = StandardScaler().fit(X[tr])
-        m = LogisticRegression(max_iter=2000, C=1.0)
+        m = _make_probe(kind)()
         m.fit(sc.transform(X[tr]), y[tr])
         pred = m.predict(sc.transform(X[te]))
         accs.append(accuracy_score(y[te], pred))
@@ -234,7 +248,47 @@ def probe(X, y, seed=42):
     return {"acc_mean": float(np.mean(accs)), "acc_se": float(np.std(accs, ddof=1) / np.sqrt(5)),
             "balanced_acc_mean": float(np.mean(baccs)),
             "balanced_acc_se": float(np.std(baccs, ddof=1) / np.sqrt(5)), "chance": chance,
-            "n": int(len(y)), "n_classes": int(len(cnts))}
+            "balanced_chance": float(1.0 / len(cnts)),
+            "n": int(len(y)), "n_classes": int(len(cnts)), "probe_kind": kind}
+
+
+def confounding_analysis(strat, biome, seed=42):
+    """How entangled are TECHNOLOGY and BIOLOGY (biome)? This caps how invariant we can get.
+
+    Reports, on the samples that have BOTH a tech and a biome label:
+      * the strat x biome cross-tab (counts),
+      * normalized mutual information NMI(tech; biome) in [0,1] (0 = independent),
+      * directional probes: predict biome from tech-onehot, and tech from biome-onehot
+        (balanced acc vs balanced chance). High = the two are mutually predictable, i.e.
+        confounded, so removing tech necessarily costs biome and vice-versa.
+
+    Label-only (no encoder), so it can run as a cheap CPU pre-screen.
+    """
+    s = np.asarray(strat)
+    b = np.asarray(biome, dtype=object)
+    has_b = np.array([x is not None for x in b])
+    s2, b2 = s[has_b], b[has_b].astype(str)
+    su = sorted(set(s2.tolist()))
+    bu = sorted(set(b2.tolist()))
+    xtab = {sv: {bv: int(np.sum((s2 == sv) & (b2 == bv))) for bv in bu} for sv in su}
+
+    nmi = float(normalized_mutual_info_score(s2, b2))
+    # tech -> biome
+    s_oh = np.stack([(s2 == sv).astype(float) for sv in su], 1)
+    biome_from_tech = probe(s_oh, b2, seed=seed, kind="linear")
+    # biome -> tech
+    b_oh = np.stack([(b2 == bv).astype(float) for bv in bu], 1)
+    tech_from_biome = probe(b_oh, s2, seed=seed, kind="linear")
+    return {
+        "n_with_both": int(has_b.sum()),
+        "crosstab_strat_x_biome": xtab,
+        "nmi_tech_biome": nmi,
+        "predict_biome_from_tech": biome_from_tech,
+        "predict_tech_from_biome": tech_from_biome,
+        "note": ("NMI≈0 and both directional probes≈chance => tech and biome are separable, "
+                 "invariance is well-posed. High NMI / high directional acc => confounded, "
+                 "so perfect tech-invariance is IMPOSSIBLE without losing biome (the ceiling)."),
+    }
 
 
 def run(
@@ -247,6 +301,8 @@ def run(
     terms_max_lines: int = None,
     susagi_repo: str = None,    # path to the Microbiome-Modelling repo (for the imposter-rep baseline)
     susagi_ckpt: str = None,    # path to the Susagi imposter checkpoint (model_state_dict)
+    mlp_probe: bool = True,     # also run an MLP probe (not just linear) on both axes
+    confounding_only: bool = False,  # compute ONLY the cheap label-only confounding pre-screen + exit
     device: str = "cpu",
     out: str = "checkpoints/microbiome_jepa/tech_invariance",
 ):
@@ -264,6 +320,26 @@ def run(
     samples = stream_labeled_communities(mapped, runid_labels, n_max, per_class_cap)
     if len(samples) < 50:
         raise RuntimeError(f"only {len(samples)} labelled communities; need more (check Terms join).")
+
+    # ---- CONFOUNDING PRE-SCREEN (label-only; caps achievable invariance) ----
+    strat0 = [s["strat"] for s in samples]
+    biome0 = [s["biome"] for s in samples]
+    confounding = confounding_analysis(strat0, biome0)
+    print("\n================ CONFOUNDING (tech vs biome) ================")
+    print(f"NMI(tech;biome) = {confounding['nmi_tech_biome']:.3f}  (0=independent, 1=identical)")
+    pbt = confounding["predict_biome_from_tech"]; ptb = confounding["predict_tech_from_biome"]
+    print(f"  predict BIOME from TECH-only : bal-acc {pbt['balanced_acc_mean']:.3f} "
+          f"(chance {pbt['balanced_chance']:.3f})")
+    print(f"  predict TECH  from BIOME-only: bal-acc {ptb['balanced_acc_mean']:.3f} "
+          f"(chance {ptb['balanced_chance']:.3f})")
+    if confounding_only:
+        Path(out).mkdir(parents=True, exist_ok=True)
+        with open(os.path.join(out, "confounding.json"), "w") as fh:
+            json.dump({"n_samples": len(samples),
+                       "strategy_counts": {s: int(strat0.count(s)) for s in STRATEGIES},
+                       "confounding": confounding}, fh, indent=2)
+        print(f"saved -> {out}/confounding.json (confounding_only)")
+        return confounding
 
     emb, otu_id_to_row = load_prokbert_embeddings(h5)
     rename_map = load_otu_rename_map(rename)
@@ -312,22 +388,29 @@ def run(
                "strategy_counts": {s: int(strat.count(s)) for s in STRATEGIES},
                "n_with_biome": int(has_biome.sum()),
                "biome_counts": {b: int(biome_y.count(b)) for b in sorted(set(biome_y))},
-               "tech_probe": {}, "biome_probe": {}}
+               "confounding": confounding,
+               "tech_probe": {}, "biome_probe": {},
+               "tech_probe_mlp": {}, "biome_probe_mlp": {}}
+    kinds = [("linear", "tech_probe", "biome_probe")]
+    if mlp_probe:
+        kinds.append(("mlp", "tech_probe_mlp", "biome_probe_mlp"))
     print("\n================ SEQUENCING-TECH INVARIANCE (amplicon vs wgs) ================")
-    print(f"n={len(samples)} strat={results['strategy_counts']} | TECH acc: LOWER = more invariant = better")
-    for name, X in reps.items():
-        tp = probe(X, strat)
-        results["tech_probe"][name] = tp
-        print(f"  TECH  {name:18s} acc {tp['acc_mean']:.3f} ± {tp['acc_se']:.3f}  "
-              f"(bal {tp['balanced_acc_mean']:.3f}, chance {tp['chance']:.3f})")
-    print(f"\nBIOME control (n={int(has_biome.sum())}, {len(set(biome_y))} biomes): HIGHER = keeps biology")
-    for name, X in reps.items():
-        if has_biome.sum() < 50:
-            break
-        bp = probe(X[has_biome], biome_y)
-        results["biome_probe"][name] = bp
-        print(f"  BIOME {name:18s} acc {bp['acc_mean']:.3f} ± {bp['acc_se']:.3f}  "
-              f"(bal {bp['balanced_acc_mean']:.3f}, chance {bp['chance']:.3f})")
+    print(f"n={len(samples)} strat={results['strategy_counts']} | TECH bal-acc: LOWER = more invariant = better")
+    for kind, tkey, bkey in kinds:
+        print(f"-- {kind} probe --")
+        for name, X in reps.items():
+            tp = probe(X, strat, kind=kind)
+            results[tkey][name] = tp
+            print(f"  TECH  {name:18s} bal {tp['balanced_acc_mean']:.3f} ± {tp['balanced_acc_se']:.3f}  "
+                  f"(acc {tp['acc_mean']:.3f}, chance {tp['balanced_chance']:.3f})")
+        print(f"  BIOME control (n={int(has_biome.sum())}, {len(set(biome_y))} biomes): HIGHER = keeps biology")
+        for name, X in reps.items():
+            if has_biome.sum() < 50:
+                break
+            bp = probe(X[has_biome], biome_y, kind=kind)
+            results[bkey][name] = bp
+            print(f"  BIOME {name:18s} bal {bp['balanced_acc_mean']:.3f} ± {bp['balanced_acc_se']:.3f}  "
+                  f"(acc {bp['acc_mean']:.3f}, chance {bp['balanced_chance']:.3f})")
 
     Path(out).mkdir(parents=True, exist_ok=True)
     with open(os.path.join(out, "tech_invariance.json"), "w") as fh:

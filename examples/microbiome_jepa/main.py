@@ -32,7 +32,12 @@ from torch.amp import GradScaler, autocast
 from torch.optim import AdamW
 from tqdm import tqdm
 
-from eb_jepa.architectures import Projector, SetTransformerEncoder
+from eb_jepa.architectures import (
+    Projector,
+    SetTransformerEncoder,
+    TechAdversaryHead,
+    dann_lambda,
+)
 from eb_jepa.datasets.utils import init_data
 from eb_jepa.logging import get_logger
 from eb_jepa.losses import BCS, VICRegLoss
@@ -176,10 +181,36 @@ def run(
     else:
         raise ValueError(f"Unknown loss.type={cfg.loss.type!r}; expected 'vicreg' or 'bcs'")
 
+    # -- DANN technology-invariance adversary (gated; coeff=0 -> not built at all,
+    #    so training is byte-identical to the baseline recipe). The adversary acts on
+    #    the ENCODER embedding (the thing we evaluate), behind a gradient-reversal
+    #    layer, so optimising it REMOVES sequencing-technology information.
+    inv_coeff = float(cfg.loss.get("invariance_coeff", 0.0))
+    n_tech = int(data_config.extra.get("n_tech_classes", 0)) if hasattr(data_config, "extra") else 0
+    adversary = None
+    if inv_coeff > 0.0:
+        if n_tech < 2:
+            raise ValueError(
+                f"loss.invariance_coeff={inv_coeff} > 0 but the data has no tech labels "
+                f"(n_tech_classes={n_tech}). Set data.with_tech_labels=true (real corpus) or "
+                "data.synth_tech_labels=true (synthetic smoke).")
+        adversary = TechAdversaryHead(
+            in_dim=D, n_classes=n_tech,
+            hidden_dim=cfg.loss.get("invariance_hidden", D),
+            n_layers=cfg.loss.get("invariance_layers", 2),
+            dropout=cfg.loss.get("invariance_dropout", 0.0),
+        ).to(device)
+        dann_gamma = float(cfg.loss.get("invariance_gamma", 10.0))
+        logger.info(f"DANN invariance ON: coeff={inv_coeff} n_tech={n_tech} gamma={dann_gamma} "
+                    f"(adversary on the {D}-d embedding)")
+
     steps_per_epoch = max(1, len(loader))
     total_steps = cfg.optim.epochs * steps_per_epoch
+    opt_params = list(model.parameters())
+    if adversary is not None:
+        opt_params += list(adversary.parameters())
     optimizer = AdamW(
-        model.parameters(),
+        opt_params,
         lr=cfg.optim.lr,
         weight_decay=cfg.optim.get("weight_decay", 1e-5),
     )
@@ -195,8 +226,11 @@ def run(
     logger.info(f"device={device} amp={use_amp} dtype={dtype} D={D} steps/epoch={steps_per_epoch}")
 
     metrics = {}
+    global_step = 0
     for epoch in range(cfg.optim.epochs):
         model.train()
+        if adversary is not None:
+            adversary.train()
         t0 = time.time()
         agg = {}
         pbar = tqdm(
@@ -205,7 +239,7 @@ def run(
             disable=cfg.logging.get("tqdm_silent", False),
         )
         for batch in pbar:
-            v1, v2, _ = _unpack_views(batch)
+            v1, v2, label = _unpack_views(batch)
             v1, v2 = obs_to(v1, device), obs_to(v2, device)
 
             optimizer.zero_grad()
@@ -218,6 +252,21 @@ def run(
                     _, z2 = model(v2)
                 loss_dict = loss_fn(z1, z2)
                 loss = loss_dict["loss"]
+                # DANN adversary: predict tech from the embedding behind a GRL whose
+                # strength ramps 0->coeff over training. Backprop NEGATES the encoder
+                # gradient -> the encoder is pushed to make tech UNrecoverable.
+                if adversary is not None and label is not None:
+                    y = label.to(device).long()
+                    keep = y >= 0  # drop unlabelled (-1) samples from the adversary
+                    if keep.any():
+                        progress = global_step / max(1, total_steps)
+                        lambd = inv_coeff * dann_lambda(progress, dann_gamma)
+                        logits = adversary(f1[keep], lambd)
+                        adv_ce = nn.functional.cross_entropy(logits, y[keep])
+                        adv_acc = (logits.argmax(-1) == y[keep]).float().mean()
+                        loss = loss + adv_ce
+                        loss_dict = {**loss_dict, "adv_ce": adv_ce.detach(),
+                                     "adv_acc": adv_acc.detach(), "dann_lambda": float(lambd)}
             scaler.scale(loss).backward()
             scaler.step(optimizer)
             scaler.update()
@@ -228,6 +277,7 @@ def run(
                         pt.data.mul_(ema_decay).add_(ps.data, alpha=1.0 - ema_decay)
                     for bt, bs in zip(target_model.buffers(), model.buffers()):
                         bt.data.copy_(bs.data)
+            global_step += 1
 
             fstd = feature_collapse_std(f1)
             for k, v in loss_dict.items():

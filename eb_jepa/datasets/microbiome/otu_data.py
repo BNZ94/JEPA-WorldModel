@@ -160,6 +160,44 @@ def build_otu_key_resolver(
     return resolver
 
 
+def load_runid_tech_labels(
+    terms_path: str,
+    strategies: Tuple[str, ...] = ("amplicon", "wgs"),
+    max_lines: Optional[int] = None,
+) -> Dict[str, int]:
+    """RunID -> tech class index, from the free-text Terms file (DANN domain labels).
+
+    The MicrobeAtlas Terms file maps each RunID to a set of free-text tokens that
+    include the library strategy (amplicon / wgs / rnaseq / ...). We keep a run iff
+    its term set contains EXACTLY ONE of ``strategies`` (a clean, unambiguous tech
+    label) and map it to that strategy's index. This is the SAME join used by the
+    post-hoc eval (tech_invariance.py), so the train-time domain label and the
+    eval-time tech label are defined identically.
+
+    Returns {RunID: class_idx} where class_idx indexes into ``strategies``.
+    """
+    strat_to_idx = {s: i for i, s in enumerate(strategies)}
+    strat_set = set(strategies)
+    labels: Dict[str, int] = {}
+    n_seen = 0
+    with open(terms_path, "r", errors="replace") as fh:
+        next(fh, None)  # header: RunID\tTerms
+        for line in fh:
+            n_seen += 1
+            if max_lines and n_seen > max_lines:
+                break
+            parts = line.rstrip("\n").split("\t")
+            if len(parts) < 2:
+                continue
+            runid = parts[0]
+            terms = set(t.strip().lower() for t in parts[1:] if t.strip())
+            hit = strat_set & terms
+            if len(hit) != 1:
+                continue
+            labels[runid] = strat_to_idx[next(iter(hit))]
+    return labels
+
+
 def parse_samples_otus_mapped(
     mapped_path: str,
     needed_srs: Optional[set] = None,
@@ -260,8 +298,22 @@ class OTUDatasetConfig:
     val_frac: float = 0.1
     seed: int = 42
 
+    # ---- DANN technology-invariance (real corpus only) -----------------------
+    # When True, each REAL community is tagged with a sequencing-technology class
+    # (amplicon/wgs) via the RunID->Terms join, and two_view __getitem__ returns a
+    # 3-tuple (view1, view2, tech_label) so main.py can train a gradient-reversal
+    # adversary. Default False -> behaviour is byte-identical to the baseline
+    # (2-tuple, no labels, no extra work). Has no effect on the synthetic path
+    # unless synth_tech_labels is also set (for CPU smoke of the DANN wiring).
+    with_tech_labels: bool = False
+    terms_path: Optional[str] = None      # default: <data_dir>/microbeatlas/sample_terms_mapping_combined_dany_og_biome_tech.txt
+    tech_strategies: Tuple[str, ...] = ("amplicon", "wgs")
+    tech_balanced: bool = True            # stream a per-class-balanced labelled corpus
+    synth_tech_labels: bool = False       # synthetic only: assign deterministic pseudo tech labels (smoke)
+
     # Filled in at build time (so downstream/eval can reuse the contract).
     size: int = 0
+    n_tech_classes: int = 0               # set at build time when labels are present
 
 
 # ===========================================================================
@@ -322,6 +374,10 @@ class OTUSampleDataset(Dataset):
             self.zscore = PerDimZScore().fit(all_tokens, mask=all_mask)
 
         self.cfg.size = len(self._raw)
+        # Expose the number of technology classes when labels are present.
+        has_tech = any("tech" in s.get("meta", {}) for s in self._raw)
+        self.cfg.n_tech_classes = len(config.tech_strategies) if has_tech else 0
+        self.has_tech_labels = has_tech
 
     # -- source resolution ---------------------------------------------------
     @staticmethod
@@ -344,9 +400,13 @@ class OTUSampleDataset(Dataset):
         """
         g = torch.Generator().manual_seed(cfg.synth_seed)
         vocab_emb = torch.randn(cfg.synth_vocab, D_EMB, generator=g)  # [V, 384]
+        # Optional pseudo tech labels for smoke-testing the DANN wiring on CPU. We
+        # make the label WEAKLY leak into the abundance scale so the adversary has a
+        # real (but removable) signal to chase: class 1 gets a small abundance shift.
+        n_tech = len(cfg.tech_strategies) if cfg.synth_tech_labels else 0
 
         samples: List[dict] = []
-        for _ in range(cfg.synth_n_samples):
+        for si in range(cfg.synth_n_samples):
             n = int(torch.randint(cfg.synth_min_otus, cfg.synth_max_otus + 1, (1,), generator=g))
             n = min(n, cfg.n_max, cfg.synth_vocab)
             otu_rows = torch.randperm(cfg.synth_vocab, generator=g)[:n]
@@ -357,11 +417,17 @@ class OTUSampleDataset(Dataset):
             rel = counts / counts.sum()
 
             emb = vocab_emb[otu_rows]                       # [n, 384]
+            meta = {"synthetic": True}
+            if n_tech:
+                tech = si % n_tech
+                rel = rel + tech * 0.15 * rel.mean()        # weak removable class signal
+                rel = rel / rel.sum()
+                meta["tech"] = tech
             clr_ab = clr(rel.unsqueeze(0), cfg.pseudocount).squeeze(0)  # [n]
             token = torch.cat([emb, clr_ab.unsqueeze(-1)], dim=-1)      # [n, 385]
 
             tokens, mask = self._pad_to_nmax(token, cfg.n_max)
-            samples.append({"tokens": tokens, "mask": mask, "meta": {"synthetic": True}})
+            samples.append({"tokens": tokens, "mask": mask, "meta": meta})
         return samples
 
     # -- real source ---------------------------------------------------------
@@ -394,6 +460,9 @@ class OTUSampleDataset(Dataset):
                 "to the cluster paths, or pass synthetic=True for CPU smoke."
             )
 
+        if cfg.with_tech_labels:
+            return self._build_real_tech_labeled(cfg, h5, mapped, rename)
+
         emb, otu_id_to_row = load_prokbert_embeddings(h5)
         emb_keys = set(otu_id_to_row.keys())
         rename_map = load_otu_rename_map(rename)
@@ -424,6 +493,108 @@ class OTUSampleDataset(Dataset):
             samples.append({"tokens": tokens, "mask": mask, "meta": {"srs": srs}})
         if not samples:
             raise RuntimeError("real corpus parse produced 0 usable communities")
+        return samples
+
+    # -- real source WITH technology labels (DANN) ---------------------------
+    def _build_real_tech_labeled(self, cfg, h5, mapped, rename) -> List[dict]:
+        """Like ``_build_real`` but keeps ONLY communities with a clean tech label
+        (amplicon/wgs via the RunID->Terms join) and, if ``tech_balanced``, streams
+        a per-class-balanced set. Each sample's meta carries ``tech`` (class idx).
+
+        ``synth_n_samples`` is the TOTAL cap (split evenly across classes when
+        balanced). The header is ``>RunID.SRS`` so RunID drives the tech join.
+        """
+        terms_path = cfg.terms_path or (
+            os.path.join(cfg.data_dir, "microbeatlas",
+                         "sample_terms_mapping_combined_dany_og_biome_tech.txt")
+            if cfg.data_dir else None
+        )
+        if not (terms_path and os.path.exists(terms_path)):
+            raise FileNotFoundError(
+                f"with_tech_labels=True needs the Terms file (got {terms_path!r}). "
+                "Set data.terms_path or data.data_dir.")
+        strategies = tuple(cfg.tech_strategies)
+        n_cls = len(strategies)
+        runid_tech = load_runid_tech_labels(terms_path, strategies=strategies)
+
+        cap_total = int(cfg.synth_n_samples)
+        per_class = cap_total // n_cls if cfg.tech_balanced else cap_total
+        got = {c: 0 for c in range(n_cls)}
+
+        # one streaming pass: collect (otu97, count) lists for labelled samples
+        collected: List[dict] = []
+        cur = None
+        with open(mapped, "r", errors="replace") as fh:
+            for line in fh:
+                if line.startswith(">"):
+                    if cur is not None and cur["otus"]:
+                        collected.append(cur)
+                    cur = None
+                    header = line[1:].split()[0]
+                    runid = header.split(".")[0]
+                    srs = header.split(".")[-1]
+                    tech = runid_tech.get(runid)
+                    if tech is None:
+                        continue
+                    if cfg.tech_balanced and got[tech] >= per_class:
+                        continue
+                    if not cfg.tech_balanced and sum(got.values()) >= cap_total:
+                        continue
+                    got[tech] += 1
+                    cur = {"runid": runid, "srs": srs, "tech": tech, "otus": []}
+                elif cur is not None:
+                    fields = line.split()
+                    if not fields:
+                        continue
+                    triplet = fields[0]
+                    cnt = 0.0
+                    if len(fields) > 1:
+                        try:
+                            cnt = float(fields[1])
+                        except ValueError:
+                            cnt = 0.0
+                    otu97 = next((t for t in triplet.split(";") if t.startswith("97_")), None)
+                    if otu97 is None:
+                        p = triplet.split(";")
+                        otu97 = p[-1] if p else triplet
+                    cur["otus"].append((otu97, cnt))
+                if all(got[c] >= per_class for c in range(n_cls)) and cfg.tech_balanced and cur is None:
+                    break
+        if cur is not None and cur["otus"]:
+            collected.append(cur)
+
+        emb, otu_id_to_row = load_prokbert_embeddings(h5)
+        rename_map = load_otu_rename_map(rename)
+        all_ids = [oid for s in collected for (oid, _) in s["otus"]]
+        resolver = build_otu_key_resolver(all_ids, rename_map, set(otu_id_to_row))
+
+        samples: List[dict] = []
+        for s in collected:
+            rows, counts = [], []
+            for oid, cnt in s["otus"]:
+                row = otu_id_to_row.get(resolver.get(oid, oid))
+                if row is not None:
+                    rows.append(row)
+                    counts.append(max(float(cnt), 0.0))
+            if not rows:
+                continue
+            rows_t = torch.tensor(rows[: cfg.n_max], dtype=torch.long)
+            counts_t = torch.tensor(counts[: cfg.n_max], dtype=torch.float32)
+            rel = counts_t / counts_t.sum().clamp_min(1e-12)
+            emb_t = torch.from_numpy(emb[rows_t.numpy()])
+            clr_ab = clr(rel.unsqueeze(0), cfg.pseudocount).squeeze(0)
+            token = torch.cat([emb_t, clr_ab.unsqueeze(-1)], dim=-1)
+            tokens, mask = self._pad_to_nmax(token, cfg.n_max)
+            samples.append({"tokens": tokens, "mask": mask,
+                            "meta": {"srs": s["srs"], "runid": s["runid"], "tech": s["tech"]}})
+        if not samples:
+            raise RuntimeError("tech-labelled corpus parse produced 0 usable communities "
+                               "(check the Terms join / strategies)")
+        import collections as _c
+        dist = _c.Counter(s["meta"]["tech"] for s in samples)
+        from eb_jepa.logging import get_logger as _gl
+        _gl(__name__).info(f"[corpus/tech] {len(samples)} labelled communities; per-class {dict(dist)} "
+                           f"(strategies={strategies})")
         return samples
 
     # -- helpers -------------------------------------------------------------
@@ -474,7 +645,12 @@ class OTUSampleDataset(Dataset):
                 dropout_p=self.cfg.dropout_p,
                 generator=g,
             )
-            return self._obs(t1, m1), self._obs(t2, m2)
+            v1, v2 = self._obs(t1, m1), self._obs(t2, m2)
+            # When tech labels are present, return a 3-tuple so main.py can train
+            # the DANN adversary. Otherwise stay a 2-tuple (byte-identical baseline).
+            if self.has_tech_labels:
+                return v1, v2, int(raw["meta"].get("tech", -1))
+            return v1, v2
 
         if self.cfg.mode == "masked":
             vis_t, vis_m, target_idx = mask_otus(
@@ -561,6 +737,8 @@ def init_microbiome_data(cfg_data: Optional[dict] = None, device=None):
         token_dim=full.token_dim,
         n_max=full.n_max,
         mode=ocfg.mode,
-        extra={"is_synthetic": full.is_synthetic, "task": "otu"},
+        extra={"is_synthetic": full.is_synthetic, "task": "otu",
+               "n_tech_classes": full.cfg.n_tech_classes,
+               "has_tech_labels": full.has_tech_labels},
     )
     return train_loader, val_loader, config, None
