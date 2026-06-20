@@ -94,9 +94,49 @@ def _encode_reps(baseline, dann, fname, data_dir, d_model, n_max, per_class_cap)
     return reps, strat, biome
 
 
+def _plot_tech_split(reps, strat_s, biome_s, biomes, bcolors, method, out):
+    """Invariance view: for each encoder (rows: baseline, DANN), fit ONE 2-D embedding on
+    ALL its samples, then show two panels in that SAME frame — left = amplicon-only, right =
+    WGS-only — both colored by BIOME. If the encoder is technology-invariant, a given biome
+    occupies the SAME region in both panels (the per-technology biome layouts coincide). The
+    baseline should DIFFER between the two panels (technology leaks into the geometry); the
+    DANN encoder should MATCH (biome layout independent of sequencing technology)."""
+    rows = [n for n in reps if n.startswith("JEPA")]  # baseline + DANN (skip raw input)
+    fig, axes = plt.subplots(len(rows), 2, figsize=(11, 5.0 * len(rows)), squeeze=False)
+    coords_out = {}
+    for r, name in enumerate(rows):
+        XY, used = _project(reps[name], method)
+        coords_out[name] = {"xy": XY.tolist(), "method": used}
+        xlim = (XY[:, 0].min() - 1, XY[:, 0].max() + 1)
+        ylim = (XY[:, 1].min() - 1, XY[:, 1].max() + 1)
+        for c, tech in enumerate(["amplicon", "wgs"]):
+            ax = axes[r][c]
+            sel = strat_s == tech
+            # faint full background so the shared frame is visible in both panels
+            ax.scatter(XY[:, 0], XY[:, 1], s=4, c="0.88", linewidths=0, zorder=0)
+            for b in biomes:
+                m = sel & (biome_s == b)
+                if m.any():
+                    ax.scatter(XY[m, 0], XY[m, 1], s=8, alpha=0.7, c=[bcolors[b]], label=b,
+                               linewidths=0, zorder=2)
+            ax.set_title(f"{name}\n{tech} only — colored by BIOME [{used}]", fontsize=10)
+            ax.set_xlim(*xlim); ax.set_ylim(*ylim); ax.set_xticks([]); ax.set_yticks([])
+            if c == 1:
+                ax.legend(markerscale=2, fontsize=7, ncol=2, loc="best")
+    fig.suptitle("Per-technology biome layout in the SAME latent frame\n"
+                 "baseline: amplicon≠wgs (tech leaks) | DANN: amplicon≈wgs (biome layout tech-invariant)",
+                 fontsize=11)
+    fig.tight_layout(rect=[0, 0, 1, 0.96])
+    fig.savefig(out, dpi=130)
+    with open(out.replace(".png", "_coords.json"), "w") as fh:
+        json.dump({"reps": rows, "strat": strat_s.tolist(), "biome": biome_s.tolist(),
+                   "coords": coords_out}, fh)
+    print(f"saved -> {out} (+ _coords.json)", flush=True)
+
+
 def run(baseline=None, dann=None, fname="examples/microbiome_jepa/cfgs/layerA_real.yaml",
         data_dir=None, d_model=128, n_max=256, per_class_cap=1500, method="umap",
-        max_points=4000, save_reps=None, from_reps=None,
+        max_points=4000, save_reps=None, from_reps=None, layout="compare",
         out="examples/microbiome_jepa/results/tech_umap.png"):
     data_dir = data_dir or os.path.join(os.environ.get("EBJEPA_DSETS", "."), "susagi", "data")
 
@@ -125,6 +165,10 @@ def run(baseline=None, dann=None, fname="examples/microbiome_jepa/cfgs/layerA_re
     bcolors = {b: plt.cm.tab10(i % 10) for i, b in enumerate(biomes)}
     bcolors["?"] = (0.8, 0.8, 0.8, 0.4)
     tcolor = {"amplicon": "#1f77b4", "wgs": "#d62728"}
+
+    if layout == "tech_split":
+        _plot_tech_split(reps, strat_s, biome_s, biomes, bcolors, method, out)
+        return
 
     nrows = len(reps)
     fig, axes = plt.subplots(nrows, 2, figsize=(11, 4.6 * nrows), squeeze=False)
