@@ -64,14 +64,10 @@ def _load_encoder(ckpt, cfg, dev):
     return enc
 
 
-def run(baseline=None, dann=None, fname="examples/microbiome_jepa/cfgs/layerA_real.yaml",
-        data_dir=None, d_model=128, n_max=256, per_class_cap=1500, method="umap",
-        max_points=4000, out="examples/microbiome_jepa/results/tech_umap.png"):
+def _encode_reps(baseline, dann, fname, data_dir, d_model, n_max, per_class_cap):
     dev = torch.device("cpu")
-    data_dir = data_dir or os.path.join(os.environ.get("EBJEPA_DSETS", "."), "susagi", "data")
     mb = os.path.join(data_dir, "microbeatlas")
     cfg = load_config(fname, {"model.d_model": d_model}, quiet=True)
-
     runid_labels = load_runid_labels(os.path.join(mb, "sample_terms_mapping_combined_dany_og_biome_tech.txt"))
     samples = stream_labeled_communities(os.path.join(mb, "samples-otus.97.mapped"),
                                          runid_labels, n_max, per_class_cap)
@@ -86,12 +82,34 @@ def run(baseline=None, dann=None, fname="examples/microbiome_jepa/cfgs/layerA_re
     strat = np.array([s["strat"] for s in samples])
     biome = np.array([s["biome"] if s["biome"] else "?" for s in samples])
     zscore = PerDimZScore().fit(tokens.reshape(-1, F), mask=masks.reshape(-1))
-
     reps = {"raw input (base)": raw_meanpool(tokens, masks, zscore)}
     if baseline and os.path.exists(baseline):
         reps["JEPA baseline (coeff=0)"] = encode(_load_encoder(baseline, cfg, dev), tokens, masks, zscore, dev)
     if dann and os.path.exists(dann):
         reps["JEPA + DANN (tech-invariant)"] = encode(_load_encoder(dann, cfg, dev), tokens, masks, zscore, dev)
+    return reps, strat, biome
+
+
+def run(baseline=None, dann=None, fname="examples/microbiome_jepa/cfgs/layerA_real.yaml",
+        data_dir=None, d_model=128, n_max=256, per_class_cap=1500, method="umap",
+        max_points=4000, save_reps=None, from_reps=None,
+        out="examples/microbiome_jepa/results/tech_umap.png"):
+    data_dir = data_dir or os.path.join(os.environ.get("EBJEPA_DSETS", "."), "susagi", "data")
+
+    if from_reps:  # load pre-encoded reps (no torch needed) -> project + plot in any env
+        z = np.load(from_reps, allow_pickle=True)
+        names = list(z["names"])
+        reps = {n: z[f"rep_{i}"] for i, n in enumerate(names)}
+        strat, biome = z["strat"].astype(str), z["biome"].astype(str)
+    else:
+        reps, strat, biome = _encode_reps(baseline, dann, fname, data_dir, d_model, n_max, per_class_cap)
+        if save_reps:  # persist high-D reps so UMAP can be run later from an isolated venv
+            names = list(reps)
+            np.savez(save_reps, names=np.array(names, dtype=object), strat=strat, biome=biome,
+                     **{f"rep_{i}": reps[n] for i, n in enumerate(names)})
+            print(f"saved reps -> {save_reps}", flush=True)
+            if method == "none":
+                return
 
     # optional subsample for legible scatter (stratified by tech)
     n = len(strat)
