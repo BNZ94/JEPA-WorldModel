@@ -1,0 +1,1669 @@
+{
+  "config": {
+    "d_model": 128,
+    "per_class_cap": 2500,
+    "n": 4960
+  },
+  "baselines": {
+    "raw_meanpool": {
+      "tech": {
+        "acc_mean": 0.9379032258064516,
+        "acc_se": 0.004944656640496264,
+        "balanced_acc_mean": 0.9380121152544374,
+        "balanced_acc_se": 0.0049277268823316065,
+        "chance": 0.5038306451612903,
+        "balanced_chance": 0.5,
+        "n": 4960,
+        "n_classes": 2,
+        "probe_kind": "linear"
+      },
+      "biome": {
+        "acc_mean": 0.8594308012045637,
+        "acc_se": 0.006146955270165961,
+        "balanced_acc_mean": 0.7927587843232028,
+        "balanced_acc_se": 0.023340165129611918,
+        "chance": 0.5324963072378139,
+        "balanced_chance": 0.125,
+        "n": 4062,
+        "n_classes": 8,
+        "probe_kind": "linear"
+      }
+    }
+  },
+  "runs": [
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8669354838709677,
+          "acc_se": 0.006164872923959936,
+          "balanced_acc_mean": 0.8670540374338611,
+          "balanced_acc_se": 0.006174306484244487,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.964717741935484,
+          "acc_se": 0.001965079505001811,
+          "balanced_acc_mean": 0.9647359900228896,
+          "balanced_acc_se": 0.0019698934985445836,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8510567199268053,
+          "acc_se": 0.004860446330327569,
+          "balanced_acc_mean": 0.7711901776713251,
+          "balanced_acc_se": 0.028030297861908367,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8798638503626416,
+          "acc_se": 0.0036500271159594787,
+          "balanced_acc_mean": 0.8097687407192019,
+          "balanced_acc_se": 0.03355336601882036,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 100.0,
+        "seed": 0,
+        "tag": "techinv_vicreg_c100_s0"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9034274193548386,
+          "acc_se": 0.0052225136479792785,
+          "balanced_acc_mean": 0.9034270590687468,
+          "balanced_acc_se": 0.005225469373965697,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9758064516129032,
+          "acc_se": 0.0017460189592428182,
+          "balanced_acc_mean": 0.9757810149628566,
+          "balanced_acc_se": 0.0017368474442230116,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8680442198510656,
+          "acc_se": 0.002547848426026914,
+          "balanced_acc_mean": 0.8107246151342208,
+          "balanced_acc_se": 0.02432068654065793,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8879885966347348,
+          "acc_se": 0.004751751876637942,
+          "balanced_acc_mean": 0.830281447622587,
+          "balanced_acc_se": 0.02064104651967122,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 10.0,
+        "seed": 2,
+        "tag": "techinv_vicreg_c10_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.880241935483871,
+          "acc_se": 0.006720094077620543,
+          "balanced_acc_mean": 0.8802230973664209,
+          "balanced_acc_se": 0.006720781666223317,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9743951612903226,
+          "acc_se": 0.0010378659416317504,
+          "balanced_acc_mean": 0.9744017751824829,
+          "balanced_acc_se": 0.0010237760656553294,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.861397609049982,
+          "acc_se": 0.002777984759900118,
+          "balanced_acc_mean": 0.8079134722703335,
+          "balanced_acc_se": 0.021771133159610465,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8842925005604736,
+          "acc_se": 0.0016679607535857875,
+          "balanced_acc_mean": 0.8485562018628616,
+          "balanced_acc_se": 0.019997587045349895,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 100.0,
+        "seed": 2,
+        "tag": "techinv_vicreg_c100_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9586693548387096,
+          "acc_se": 0.003981535818171662,
+          "balanced_acc_mean": 0.9586856074390904,
+          "balanced_acc_se": 0.003983945272651536,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9794354838709678,
+          "acc_se": 0.0017919746809104016,
+          "balanced_acc_mean": 0.9794346504119902,
+          "balanced_acc_se": 0.0017814676478589682,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8682941607741201,
+          "acc_se": 0.005321317247669776,
+          "balanced_acc_mean": 0.8386261659490074,
+          "balanced_acc_se": 0.02242702196573511,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8852810547809913,
+          "acc_se": 0.004159831241404425,
+          "balanced_acc_mean": 0.8361956138933685,
+          "balanced_acc_se": 0.02441218357871212,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 0.0,
+        "seed": 0,
+        "tag": "techinv_vicreg_c0_s0"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9602822580645161,
+          "acc_se": 0.001980532530684334,
+          "balanced_acc_mean": 0.9603234294245245,
+          "balanced_acc_se": 0.0019869027460782825,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9804435483870968,
+          "acc_se": 0.0017047917868233686,
+          "balanced_acc_mean": 0.9804281807699239,
+          "balanced_acc_se": 0.0016894635100909846,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8643511533637505,
+          "acc_se": 0.004956575363480511,
+          "balanced_acc_mean": 0.8295063839381683,
+          "balanced_acc_se": 0.026599815494652918,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8862623379928382,
+          "acc_se": 0.0012795333770236378,
+          "balanced_acc_mean": 0.8262432447924338,
+          "balanced_acc_se": 0.020602553974769008,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 0.0,
+        "seed": 2,
+        "tag": "techinv_vicreg_c0_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9209677419354838,
+          "acc_se": 0.003766439857312379,
+          "balanced_acc_mean": 0.9209723817495974,
+          "balanced_acc_se": 0.003747836741841509,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9711693548387096,
+          "acc_se": 0.002128902427615214,
+          "balanced_acc_mean": 0.9711692895578586,
+          "balanced_acc_se": 0.002115520002605593,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.857954786444416,
+          "acc_se": 0.004690667580036964,
+          "balanced_acc_mean": 0.7862721272103205,
+          "balanced_acc_se": 0.029586736718007153,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8842943183126414,
+          "acc_se": 0.0015886467882849221,
+          "balanced_acc_mean": 0.8246656238892607,
+          "balanced_acc_se": 0.033337985804532094,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 10.0,
+        "seed": 2,
+        "tag": "techinv_bcs_c10_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8393145161290322,
+          "acc_se": 0.004734684905571523,
+          "balanced_acc_mean": 0.8395410749928758,
+          "balanced_acc_se": 0.004683340905396638,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9556451612903226,
+          "acc_se": 0.0037447934719771663,
+          "balanced_acc_mean": 0.9556820343700313,
+          "balanced_acc_se": 0.003748856772484741,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8387502347929884,
+          "acc_se": 0.005287040998719653,
+          "balanced_acc_mean": 0.7644177130958947,
+          "balanced_acc_se": 0.02106301988999893,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8729748726058689,
+          "acc_se": 0.006249681677626045,
+          "balanced_acc_mean": 0.804944082460285,
+          "balanced_acc_se": 0.019896021235733797,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 1000.0,
+        "seed": 1,
+        "tag": "techinv_bcs_c1000_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8487903225806452,
+          "acc_se": 0.0030741836052372742,
+          "balanced_acc_mean": 0.8489642629707708,
+          "balanced_acc_se": 0.0030531869152104862,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.959475806451613,
+          "acc_se": 0.0019232645189857652,
+          "balanced_acc_mean": 0.9595018670464828,
+          "balanced_acc_se": 0.0019360480333588672,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8389974490877913,
+          "acc_se": 0.0051411342312127056,
+          "balanced_acc_mean": 0.7588403186565043,
+          "balanced_acc_se": 0.046021737042586094,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8759220547870503,
+          "acc_se": 0.004245419528208979,
+          "balanced_acc_mean": 0.7954388168572323,
+          "balanced_acc_se": 0.031601981703106984,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 1000.0,
+        "seed": 2,
+        "tag": "techinv_vicreg_c1000_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8846774193548388,
+          "acc_se": 0.004995770844098333,
+          "balanced_acc_mean": 0.8848063676950696,
+          "balanced_acc_se": 0.0049814027725749435,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9616935483870968,
+          "acc_se": 0.003139599093225286,
+          "balanced_acc_mean": 0.9616897178912319,
+          "balanced_acc_se": 0.0031419375090723837,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8498303431310175,
+          "acc_se": 0.004995878635645492,
+          "balanced_acc_mean": 0.774556879309475,
+          "balanced_acc_se": 0.02826990599896262,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8759308405891941,
+          "acc_se": 0.007929165490348129,
+          "balanced_acc_mean": 0.8134624870708137,
+          "balanced_acc_se": 0.035248288243327736,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 100.0,
+        "seed": 0,
+        "tag": "techinv_bcs_c100_s0"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8786290322580645,
+          "acc_se": 0.003149294224155912,
+          "balanced_acc_mean": 0.8787173601346066,
+          "balanced_acc_se": 0.0031170131841575027,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9693548387096774,
+          "acc_se": 0.002753326670110426,
+          "balanced_acc_mean": 0.9693424943655348,
+          "balanced_acc_se": 0.0027533155828839482,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8458918801010672,
+          "acc_se": 0.00376993056909209,
+          "balanced_acc_mean": 0.7530900155609939,
+          "balanced_acc_se": 0.021364138415320155,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8788795375638486,
+          "acc_se": 0.0030576776815410215,
+          "balanced_acc_mean": 0.8306146899929253,
+          "balanced_acc_se": 0.023727556888817718,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 100.0,
+        "seed": 2,
+        "tag": "techinv_bcs_c100_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8407258064516128,
+          "acc_se": 0.004886774049814837,
+          "balanced_acc_mean": 0.8409394605897426,
+          "balanced_acc_se": 0.004836270587727264,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9598790322580646,
+          "acc_se": 0.0036541469678209306,
+          "balanced_acc_mean": 0.959904764174699,
+          "balanced_acc_se": 0.0036561188427722793,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8407188603905744,
+          "acc_se": 0.0057920962465054255,
+          "balanced_acc_mean": 0.7823207852661146,
+          "balanced_acc_se": 0.023643560965944957,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8732190573137257,
+          "acc_se": 0.005153059236081028,
+          "balanced_acc_mean": 0.8034223034162,
+          "balanced_acc_se": 0.022259643012734153,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 1000.0,
+        "seed": 1,
+        "tag": "techinv_vicreg_c1000_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8495967741935484,
+          "acc_se": 0.005375924042731201,
+          "balanced_acc_mean": 0.8498101460527547,
+          "balanced_acc_se": 0.005355209111400095,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9568548387096774,
+          "acc_se": 0.0008671698857905949,
+          "balanced_acc_mean": 0.9568677205662169,
+          "balanced_acc_se": 0.0008782465368377356,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8357942668096632,
+          "acc_se": 0.0062511973282495335,
+          "balanced_acc_mean": 0.7748443542293362,
+          "balanced_acc_se": 0.03478355925190443,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.865341222377741,
+          "acc_se": 0.005377139982472253,
+          "balanced_acc_mean": 0.7711002864590273,
+          "balanced_acc_se": 0.03201266734280044,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 1000.0,
+        "seed": 0,
+        "tag": "techinv_vicreg_c1000_s0"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9116935483870968,
+          "acc_se": 0.0042122141967290624,
+          "balanced_acc_mean": 0.9117622819444525,
+          "balanced_acc_se": 0.004212554239956141,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9713709677419354,
+          "acc_se": 0.003100515423231795,
+          "balanced_acc_mean": 0.9713453114510819,
+          "balanced_acc_se": 0.0030906375600348005,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8535225007422488,
+          "acc_se": 0.0024613146813287916,
+          "balanced_acc_mean": 0.7588001148337936,
+          "balanced_acc_se": 0.016179641146423576,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8761726016274942,
+          "acc_se": 0.0049267970076332665,
+          "balanced_acc_mean": 0.796105254360697,
+          "balanced_acc_se": 0.03159042855025961,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 10.0,
+        "seed": 1,
+        "tag": "techinv_bcs_c10_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9379032258064516,
+          "acc_se": 0.002716168061553931,
+          "balanced_acc_mean": 0.9378857335178612,
+          "balanced_acc_se": 0.002678911554714024,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.970766129032258,
+          "acc_se": 0.003433344025388379,
+          "balanced_acc_mean": 0.970770091161065,
+          "balanced_acc_se": 0.0034206696397247713,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8574594489787263,
+          "acc_se": 0.002503758962059814,
+          "balanced_acc_mean": 0.7750132308518959,
+          "balanced_acc_se": 0.04771563127927381,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8793694217730355,
+          "acc_se": 0.0017894554778359621,
+          "balanced_acc_mean": 0.8323830418424387,
+          "balanced_acc_se": 0.038974751350421485,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 0.0,
+        "seed": 0,
+        "tag": "techinv_bcs_c0_s0"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8844758064516128,
+          "acc_se": 0.002914683930403411,
+          "balanced_acc_mean": 0.8845640453750059,
+          "balanced_acc_se": 0.0028750686104062942,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9649193548387096,
+          "acc_se": 0.0007407731076965212,
+          "balanced_acc_mean": 0.9649290739595253,
+          "balanced_acc_se": 0.0007410375767834458,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8505692593871752,
+          "acc_se": 0.005235110038605248,
+          "balanced_acc_mean": 0.7685353712020294,
+          "balanced_acc_se": 0.015415922771390518,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8714921927544399,
+          "acc_se": 0.0020759795742320048,
+          "balanced_acc_mean": 0.8014787776811998,
+          "balanced_acc_se": 0.021968340106904034,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 100.0,
+        "seed": 1,
+        "tag": "techinv_bcs_c100_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9157258064516128,
+          "acc_se": 0.0033976410375711045,
+          "balanced_acc_mean": 0.9157630382055689,
+          "balanced_acc_se": 0.0033641789574417108,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9620967741935484,
+          "acc_se": 0.002398261543018211,
+          "balanced_acc_mean": 0.9620636557337701,
+          "balanced_acc_se": 0.0023952144379165625,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8429374269112149,
+          "acc_se": 0.005378654434134185,
+          "balanced_acc_mean": 0.7552287018513063,
+          "balanced_acc_se": 0.01987212049533345,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8705090917904252,
+          "acc_se": 0.003619759256535252,
+          "balanced_acc_mean": 0.7966763433378852,
+          "balanced_acc_se": 0.03229741026654032,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 10.0,
+        "seed": 0,
+        "tag": "techinv_bcs_c10_s0"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9252016129032258,
+          "acc_se": 0.003598098447091684,
+          "balanced_acc_mean": 0.925222020934628,
+          "balanced_acc_se": 0.0035912704743020695,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9774193548387098,
+          "acc_se": 0.0016129032258064325,
+          "balanced_acc_mean": 0.9774057943952352,
+          "balanced_acc_se": 0.001613975287369589,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8697707814516568,
+          "acc_se": 0.004289885209623818,
+          "balanced_acc_mean": 0.8399812547891461,
+          "balanced_acc_se": 0.021292972978725636,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8941422936396851,
+          "acc_se": 0.0036592150036418975,
+          "balanced_acc_mean": 0.8350919684802441,
+          "balanced_acc_se": 0.020863856671122918,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 10.0,
+        "seed": 1,
+        "tag": "techinv_vicreg_c10_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9342741935483871,
+          "acc_se": 0.004501434185839941,
+          "balanced_acc_mean": 0.9342426325432408,
+          "balanced_acc_se": 0.004489572747042704,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9683467741935484,
+          "acc_se": 0.0016129032258064403,
+          "balanced_acc_mean": 0.9683184709166681,
+          "balanced_acc_se": 0.0015992184425742445,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8537688061609681,
+          "acc_se": 0.005399431721760274,
+          "balanced_acc_mean": 0.7658096777761557,
+          "balanced_acc_se": 0.0396334864263014,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8741997346081835,
+          "acc_se": 0.003147971196743626,
+          "balanced_acc_mean": 0.7923467693036055,
+          "balanced_acc_se": 0.030733248664970323,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 0.0,
+        "seed": 2,
+        "tag": "techinv_bcs_c0_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9310483870967742,
+          "acc_se": 0.0038597156691686815,
+          "balanced_acc_mean": 0.9310511859583877,
+          "balanced_acc_se": 0.0038548819102839924,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9681451612903226,
+          "acc_se": 0.001515453263948892,
+          "balanced_acc_mean": 0.9681298870370567,
+          "balanced_acc_se": 0.0015103903332511705,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8527844933621751,
+          "acc_se": 0.005762148563434808,
+          "balanced_acc_mean": 0.7684156230652115,
+          "balanced_acc_se": 0.03362003593282635,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8756766582444151,
+          "acc_se": 0.003633086596360369,
+          "balanced_acc_mean": 0.7973412027576257,
+          "balanced_acc_se": 0.03208487144868206,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 0.0,
+        "seed": 1,
+        "tag": "techinv_bcs_c0_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9596774193548387,
+          "acc_se": 0.0017166720126941838,
+          "balanced_acc_mean": 0.9596721752811515,
+          "balanced_acc_se": 0.0017059928810387072,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9784274193548388,
+          "acc_se": 0.0012988002748714888,
+          "balanced_acc_mean": 0.9784094701780083,
+          "balanced_acc_se": 0.0012857046669820624,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8692745351098831,
+          "acc_se": 0.003837478012905429,
+          "balanced_acc_mean": 0.8423010197601883,
+          "balanced_acc_se": 0.02471112500220686,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.884783596604439,
+          "acc_se": 0.0055917100791110395,
+          "balanced_acc_mean": 0.8275431005899712,
+          "balanced_acc_se": 0.036086058718074104,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 0.0,
+        "seed": 1,
+        "tag": "techinv_vicreg_c0_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9078629032258064,
+          "acc_se": 0.0032289551165417293,
+          "balanced_acc_mean": 0.9078798131496093,
+          "balanced_acc_se": 0.0032109967064801507,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9774193548387098,
+          "acc_se": 0.0019805325306843317,
+          "balanced_acc_mean": 0.9774127222105287,
+          "balanced_acc_se": 0.001971929612298418,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8660768060882578,
+          "acc_se": 0.0023006555606107254,
+          "balanced_acc_mean": 0.8066912246739767,
+          "balanced_acc_se": 0.030547632890470768,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8857700301140943,
+          "acc_se": 0.004310348955935443,
+          "balanced_acc_mean": 0.8475436367289401,
+          "balanced_acc_se": 0.03565547111170024,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 10.0,
+        "seed": 0,
+        "tag": "techinv_vicreg_c10_s0"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8616935483870968,
+          "acc_se": 0.004049860771492062,
+          "balanced_acc_mean": 0.8617991307339692,
+          "balanced_acc_se": 0.004012196890184662,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9691532258064516,
+          "acc_se": 0.0012180489892736513,
+          "balanced_acc_mean": 0.9691769954724997,
+          "balanced_acc_se": 0.0012270174743468098,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8542574785353766,
+          "acc_se": 0.0040888855151698265,
+          "balanced_acc_mean": 0.7854447431812824,
+          "balanced_acc_se": 0.03584974027368304,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.881832173001533,
+          "acc_se": 0.0030605389582592187,
+          "balanced_acc_mean": 0.8342120366053877,
+          "balanced_acc_se": 0.02496117514900697,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "vicreg",
+        "coeff": 100.0,
+        "seed": 1,
+        "tag": "techinv_vicreg_c100_s1"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8502016129032258,
+          "acc_se": 0.002522176613547737,
+          "balanced_acc_mean": 0.850453258224095,
+          "balanced_acc_se": 0.002499118422914176,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.9576612903225806,
+          "acc_se": 0.0018859160215594457,
+          "balanced_acc_mean": 0.9577059318789296,
+          "balanced_acc_se": 0.0018978908075390952,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8380107126194416,
+          "acc_se": 0.0047915266885782785,
+          "balanced_acc_mean": 0.7745685868162544,
+          "balanced_acc_se": 0.0347650496250651,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8700134513660407,
+          "acc_se": 0.005267809933065796,
+          "balanced_acc_mean": 0.7741043697329836,
+          "balanced_acc_se": 0.030672200696303668,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 1000.0,
+        "seed": 2,
+        "tag": "techinv_bcs_c1000_s2"
+      }
+    },
+    {
+      "tech_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8421370967741935,
+          "acc_se": 0.00438942360021719,
+          "balanced_acc_mean": 0.8423345591759055,
+          "balanced_acc_se": 0.004373537759066163,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "linear"
+        }
+      },
+      "tech_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.955241935483871,
+          "acc_se": 0.001218048989273654,
+          "balanced_acc_mean": 0.9552437771600193,
+          "balanced_acc_se": 0.0012197944119776568,
+          "chance": 0.5038306451612903,
+          "balanced_chance": 0.5,
+          "n": 4960,
+          "n_classes": 2,
+          "probe_kind": "mlp"
+        }
+      },
+      "biome_probe": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8333339392507225,
+          "acc_se": 0.004104329200244919,
+          "balanced_acc_mean": 0.7653455454382642,
+          "balanced_acc_se": 0.033402840132456375,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "linear"
+        }
+      },
+      "biome_probe_mlp": {
+        "jepa_pretrained": {
+          "acc_mean": 0.8685407691515341,
+          "acc_se": 0.006004661630138161,
+          "balanced_acc_mean": 0.7866779158776727,
+          "balanced_acc_se": 0.03662817132644969,
+          "chance": 0.5324963072378139,
+          "balanced_chance": 0.125,
+          "n": 4062,
+          "n_classes": 8,
+          "probe_kind": "mlp"
+        }
+      },
+      "_meta": {
+        "loss": "bcs",
+        "coeff": 1000.0,
+        "seed": 0,
+        "tag": "techinv_bcs_c1000_s0"
+      }
+    }
+  ],
+  "summary": [
+    {
+      "loss": "bcs",
+      "coeff": 0.0,
+      "tech_balacc": {
+        "mean": 0.9343931840064966,
+        "se": 0.001974399435524027,
+        "n": 3
+      },
+      "biome_balacc": {
+        "mean": 0.7697461772310877,
+        "se": 0.0027388640039098613,
+        "n": 3
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9690728163715967,
+        "se": 0.0008503817286246877,
+        "n": 3
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.8073570046345567,
+        "se": 0.01259580611591789,
+        "n": 3
+      }
+    },
+    {
+      "loss": "bcs",
+      "coeff": 10.0,
+      "tech_balacc": {
+        "mean": 0.9161659006332062,
+        "se": 0.0026663463270227904,
+        "n": 3
+      },
+      "biome_balacc": {
+        "mean": 0.7667669812984735,
+        "se": 0.009806915679843846,
+        "n": 3
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9681927522475702,
+        "se": 0.0030649694932321572,
+        "n": 3
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.805815740529281,
+        "se": 0.009426383411620049,
+        "n": 3
+      }
+    },
+    {
+      "loss": "bcs",
+      "coeff": 100.0,
+      "tech_balacc": {
+        "mean": 0.8826959244015606,
+        "se": 0.001990511680147714,
+        "n": 3
+      },
+      "biome_balacc": {
+        "mean": 0.7653940886908327,
+        "se": 0.006392894536392889,
+        "n": 3
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9653204287387641,
+        "se": 0.002217815431442654,
+        "n": 3
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.815185318248313,
+        "se": 0.008454810406089586,
+        "n": 3
+      }
+    },
+    {
+      "loss": "bcs",
+      "coeff": 1000.0,
+      "tech_balacc": {
+        "mean": 0.8441096307976254,
+        "se": 0.0032727203345536116,
+        "n": 3
+      },
+      "biome_balacc": {
+        "mean": 0.7681106151168043,
+        "se": 0.003240075465533656,
+        "n": 3
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9562105811363267,
+        "se": 0.0007583035293961785,
+        "n": 3
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.7885754560236471,
+        "se": 0.008953071432564515,
+        "n": 3
+      }
+    },
+    {
+      "loss": "vicreg",
+      "coeff": 0.0,
+      "tech_balacc": {
+        "mean": 0.9595604040482555,
+        "se": 0.00047608991460654237,
+        "n": 3
+      },
+      "biome_balacc": {
+        "mean": 0.8368111898824546,
+        "se": 0.00380334414457193,
+        "n": 3
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9794241004533074,
+        "se": 0.0005827754254997433,
+        "n": 3
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.8299939864252579,
+        "se": 0.0031234352729815717,
+        "n": 3
+      }
+    },
+    {
+      "loss": "vicreg",
+      "coeff": 10.0,
+      "tech_balacc": {
+        "mean": 0.9121762977176614,
+        "se": 0.00664830618569965,
+        "n": 3
+      },
+      "biome_balacc": {
+        "mean": 0.8191323648657812,
+        "se": 0.010489267815703137,
+        "n": 3
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9768665105228735,
+        "se": 0.0005427514645361631,
+        "n": 3
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.8376390176105905,
+        "se": 0.0051433253717859595,
+        "n": 3
+      }
+    },
+    {
+      "loss": "vicreg",
+      "coeff": 100.0,
+      "tech_balacc": {
+        "mean": 0.8696920885114171,
+        "se": 0.005479663059418562,
+        "n": 3
+      },
+      "biome_balacc": {
+        "mean": 0.788182797707647,
+        "se": 0.010689134646817743,
+        "n": 3
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9694382535592907,
+        "se": 0.0027933279153958502,
+        "n": 3
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.8308456597291505,
+        "se": 0.01132278168777998,
+        "n": 3
+      }
+    },
+    {
+      "loss": "vicreg",
+      "coeff": 1000.0,
+      "tech_balacc": {
+        "mean": 0.8465712898710893,
+        "se": 0.0028264822269488403,
+        "n": 3
+      },
+      "biome_balacc": {
+        "mean": 0.772001819383985,
+        "se": 0.006925630688766024,
+        "n": 3
+      },
+      "tech_balacc_mlp": {
+        "mean": 0.9587581172624663,
+        "se": 0.0009523271979514144,
+        "n": 3
+      },
+      "biome_balacc_mlp": {
+        "mean": 0.7899871355774866,
+        "se": 0.009720576399694418,
+        "n": 3
+      }
+    }
+  ]
+}
