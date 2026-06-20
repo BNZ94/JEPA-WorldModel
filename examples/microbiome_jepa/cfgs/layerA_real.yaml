@@ -36,9 +36,10 @@ loss:
   std_coeff: 1.0
   cov_coeff: 25.0
   lmbd: 10.0
-  # --- tech-invariance (DANN) adversary; coeff=0 -> adversary NOT built (bit-exact baseline) ---
-  invariance_coeff: 0.0     # >0 turns on the gradient-reversal tech adversary; swept by the launcher
-  invariance_gamma: 10.0    # DANN lambda(p)=2/(1+e^{-gamma p})-1 ramp
+  # --- tech-invariance; coeff=0 -> nothing built (bit-exact baseline) ---
+  invariance_coeff: 0.0     # >0 turns on the invariance term; swept by the launcher
+  invariance_method: dann   # dann (GRL adversary) | coral | mmd (deterministic marginal alignment)
+  invariance_gamma: 10.0    # DANN lambda(p)=2/(1+e^{-gamma p})-1 ramp (dann only)
   invariance_layers: 2
   invariance_hidden:        # null -> defaults to encoder d_model
 optim:

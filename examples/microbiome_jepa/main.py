@@ -76,6 +76,32 @@ def feature_collapse_std(feat):
     return feat.float().std(dim=0).mean().item()
 
 
+def coral_loss(fa, fb):
+    """CORAL: align the mean + covariance of two domains' features (deterministic, no adversary).
+
+    fa,fb: [n, d] embeddings of the two technologies in the batch. Returns the squared
+    Frobenius distance between covariances (normalised by 4 d^2) plus the squared mean gap
+    (normalised by d). Minimising it makes the per-technology latent marginals coincide to
+    second order — the standard Deep-CORAL domain-alignment objective."""
+    d = fa.shape[1]
+    ma, mb = fa.mean(0), fb.mean(0)
+    da, db = fa - ma, fb - mb
+    ca = da.t() @ da / max(1, fa.shape[0] - 1)
+    cb = db.t() @ db / max(1, fb.shape[0] - 1)
+    cov_term = ((ca - cb) ** 2).sum() / (4.0 * d * d)
+    mean_term = ((ma - mb) ** 2).sum() / d
+    return cov_term + mean_term
+
+
+def mmd_rbf_loss(fa, fb, sigmas=(2.0, 5.0, 10.0, 20.0)):
+    """RBF-kernel MMD^2 between two domains' features (multi-bandwidth). 0 iff distributions
+    match. Stronger than CORAL (matches all moments via the kernel), still adversary-free."""
+    def k(x, y):
+        d2 = (x.unsqueeze(1) - y.unsqueeze(0)).pow(2).sum(-1)
+        return sum(torch.exp(-d2 / (2 * s * s)) for s in sigmas) / len(sigmas)
+    return k(fa, fa).mean() + k(fb, fb).mean() - 2 * k(fa, fb).mean()
+
+
 class CommunitySSL(nn.Module):
     """Set-transformer encoder + projector for two-view community SSL."""
 
@@ -186,23 +212,34 @@ def run(
     #    the ENCODER embedding (the thing we evaluate), behind a gradient-reversal
     #    layer, so optimising it REMOVES sequencing-technology information.
     inv_coeff = float(cfg.loss.get("invariance_coeff", 0.0))
+    inv_method = str(cfg.loss.get("invariance_method", "dann")).lower()
     n_tech = int(data_config.extra.get("n_tech_classes", 0)) if hasattr(data_config, "extra") else 0
     adversary = None
+    dann_gamma = float(cfg.loss.get("invariance_gamma", 10.0))
     if inv_coeff > 0.0:
         if n_tech < 2:
             raise ValueError(
                 f"loss.invariance_coeff={inv_coeff} > 0 but the data has no tech labels "
                 f"(n_tech_classes={n_tech}). Set data.with_tech_labels=true (real corpus) or "
                 "data.synth_tech_labels=true (synthetic smoke).")
-        adversary = TechAdversaryHead(
-            in_dim=D, n_classes=n_tech,
-            hidden_dim=cfg.loss.get("invariance_hidden", D),
-            n_layers=cfg.loss.get("invariance_layers", 2),
-            dropout=cfg.loss.get("invariance_dropout", 0.0),
-        ).to(device)
-        dann_gamma = float(cfg.loss.get("invariance_gamma", 10.0))
-        logger.info(f"DANN invariance ON: coeff={inv_coeff} n_tech={n_tech} gamma={dann_gamma} "
-                    f"(adversary on the {D}-d embedding)")
+        if inv_method == "dann":
+            # adversarial removal: a tech classifier behind a gradient-reversal layer
+            adversary = TechAdversaryHead(
+                in_dim=D, n_classes=n_tech,
+                hidden_dim=cfg.loss.get("invariance_hidden", D),
+                n_layers=cfg.loss.get("invariance_layers", 2),
+                dropout=cfg.loss.get("invariance_dropout", 0.0),
+            ).to(device)
+            logger.info(f"DANN invariance ON: coeff={inv_coeff} n_tech={n_tech} gamma={dann_gamma} "
+                        f"(adversary on the {D}-d embedding)")
+        elif inv_method in ("coral", "mmd"):
+            # deterministic distribution alignment between the per-technology latent
+            # marginals (no adversary, no min-max race). Single knob = invariance_coeff.
+            logger.info(f"{inv_method.upper()} invariance ON: coeff={inv_coeff} n_tech={n_tech} "
+                        f"(align per-technology marginals of the {D}-d embedding)")
+        else:
+            raise ValueError(f"Unknown loss.invariance_method={inv_method!r} "
+                             "(expected 'dann' | 'coral' | 'mmd').")
 
     steps_per_epoch = max(1, len(loader))
     total_steps = cfg.optim.epochs * steps_per_epoch
@@ -267,6 +304,15 @@ def run(
                         loss = loss + adv_ce
                         loss_dict = {**loss_dict, "adv_ce": adv_ce.detach(),
                                      "adv_acc": adv_acc.detach(), "dann_lambda": float(lambd)}
+                # CORAL / MMD: deterministic alignment of the per-technology latent marginals
+                # (binary tech assumed: classes 0 vs 1). No adversary, no GRL.
+                elif inv_coeff > 0.0 and inv_method in ("coral", "mmd") and label is not None:
+                    y = label.to(device).long()
+                    fa, fb = f1[y == 0].float(), f1[y == 1].float()
+                    if fa.shape[0] >= 2 and fb.shape[0] >= 2:
+                        align = coral_loss(fa, fb) if inv_method == "coral" else mmd_rbf_loss(fa, fb)
+                        loss = loss + inv_coeff * align
+                        loss_dict = {**loss_dict, f"{inv_method}_loss": align.detach()}
             scaler.scale(loss).backward()
             scaler.step(optimizer)
             scaler.update()

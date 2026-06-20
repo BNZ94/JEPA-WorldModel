@@ -27,11 +27,13 @@ LOSSES=${LOSSES:-vicreg,bcs}
 COEFFS=${COEFFS:-0,0.3,1.0,3.0}
 SEEDS=${SEEDS:-0,1,2}
 EP=${EP:-30}; NS=${NS:-16000}; DM=${DM:-128}; NGPU=${NGPU:-3}
+METHOD=${METHOD:-dann}
+# separate checkpoint pool per method so coral/mmd don't collide with the DANN sweep
+CKPT_ROOT=${CKPT_ROOT:-$WORK/checkpoints/microbiome_jepa/tech_sweep}
 
-# TRAIN ONLY (GPU): eval runs separately on CPU (run_tech_eval.sh) so GPUs are released
-# during the CPU probe phase — friendlier to the shared gres/gpu=3 cap.
+# TRAIN ONLY (GPU): eval runs separately on CPU so GPUs are released during the CPU probe phase.
 $PY -m examples.microbiome_jepa.tech_sweep \
-  --losses $LOSSES --coeffs $COEFFS --seeds $SEEDS \
-  --n_gpus $NGPU --epochs $EP --ns $NS --d_model $DM \
+  --losses $LOSSES --coeffs $COEFFS --seeds $SEEDS --method $METHOD \
+  --n_gpus $NGPU --epochs $EP --ns $NS --d_model $DM --ckpt_root $CKPT_ROOT \
   --data_dir $DATA --per_class_cap ${CAP:-2500} --skip_eval true
 echo "MB_TECHSWEEP_TRAIN_DONE"

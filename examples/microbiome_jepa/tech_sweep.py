@@ -45,7 +45,7 @@ def _tag(loss, coeff, seed):
     return f"techinv_{loss}_c{c}_s{seed}"
 
 
-def train_one(loss, coeff, seed, gpu, data_dir, ckpt_root, epochs, ns, d_model, log_dir):
+def train_one(loss, coeff, seed, gpu, data_dir, ckpt_root, epochs, ns, d_model, log_dir, method="dann"):
     """Spawn one training subprocess pinned to `gpu`. Returns (Popen, tag, ckpt_dir, logf)."""
     tag = _tag(loss, coeff, seed)
     ckpt_dir = os.path.join(ckpt_root, tag)
@@ -62,6 +62,7 @@ def train_one(loss, coeff, seed, gpu, data_dir, ckpt_root, epochs, ns, d_model, 
         "--model.d_model", str(d_model),
         "--loss.type", loss,
         "--loss.invariance_coeff", str(coeff),
+        "--loss.invariance_method", str(method),
         "--optim.epochs", str(epochs),
         "--logging.tqdm_silent", "true",
     ]
@@ -110,6 +111,7 @@ def run(
     data_dir: str = None,
     ckpt_root: str = None,
     out_root: str = None,
+    method: str = "dann",       # invariance method: dann | coral | mmd
     skip_train: bool = False,   # only re-run eval on existing checkpoints
     skip_eval: bool = False,    # only train (GPU job); run eval separately on CPU to free GPUs
 ):
@@ -122,7 +124,7 @@ def run(
 
     losses, coeffs, seeds = _csv(losses), _csv(coeffs), _csv(seeds)
     grid = list(itertools.product(losses, coeffs, seeds))
-    print(f"[sweep] {len(grid)} runs: losses={losses} coeffs={coeffs} seeds={seeds} "
+    print(f"[sweep] {len(grid)} runs: losses={losses} coeffs={coeffs} seeds={seeds} method={method} "
           f"n_gpus={n_gpus} epochs={epochs} ns={ns} d_model={d_model}", flush=True)
 
     # ---- Phase 1: train across the GPU pool (n_gpus concurrent) ----
@@ -136,7 +138,7 @@ def run(
                 loss, coeff, seed = pending.pop(0)
                 gpu = free_gpus.pop(0)
                 p, tag, ckpt_dir, logf = train_one(
-                    loss, coeff, seed, gpu, data_dir, ckpt_root, epochs, ns, d_model, log_dir)
+                    loss, coeff, seed, gpu, data_dir, ckpt_root, epochs, ns, d_model, log_dir, method)
                 running[gpu] = (p, tag, ckpt_dir, logf, (loss, coeff, seed))
                 print(f"[train] start {tag} on gpu{gpu}", flush=True)
             done = []
