@@ -8,12 +8,20 @@ checkpoint) or **PENDING**. No fabricated numbers.
 M2 produced a documented **negative**: our set-JEPA community embedding is *more* separable by
 sequencing technology (amplicon-16S vs WGS-shotgun) than even the raw input — i.e. the SSL encoder
 *amplifies* a technical nuisance instead of abstracting it away. This follow-up adds a
-technology-invariance term (adversarial DANN) to Layer-A training, sweeps its strength, and reports the
-dual-axis tradeoff (technology DOWN, biology MAINTAINED) against a measured confounding ceiling.
-**Outcome (MEASURED, honest): the fix FAILS** — DANN never drives technology near chance/the floor and
-destroys biology faster than it removes technology. So this is a *diagnose → attempt → diagnosed
-negative* arc, not a clean fix; the diagnosis (why a single adversary can't scrub a dominant,
-linearly-accessible nuisance) is the contribution.
+technology-invariance term to Layer-A training, sweeps its strength, and reports the dual-axis tradeoff
+(technology DOWN, biology MAINTAINED) against a measured confounding ceiling, for **two method
+families**: adversarial **DANN** and deterministic distribution-alignment **CORAL**.
+
+**Outcome (MEASURED, honest):**
+- **DANN fails** — it never drives technology near chance/the floor and destroys biology *faster* than
+  it removes technology (the adversary is fooled without the info being removed).
+- **CORAL partially works** — it reduces *linearly-accessible* technology substantially while
+  **preserving biology** (SIGReg+CORAL removes ~9 pts of tech at ≈zero biome cost). It is the real
+  (partial) fix; full invariance is not reached (a nonlinear MLP probe still recovers technology).
+
+So the arc is *diagnose → adversarial attempt fails → deterministic alignment partially fixes it*, with
+a clear diagnosis of **why** (a dominant, linearly-accessible nuisance defeats a min-max adversary but
+yields to moment-matching, up to the nonlinear-residual limit).
 
 ## Setup (what the two axes are)
 - **Technology axis (nuisance, want invariant):** library strategy **amplicon vs WGS**, joined per
@@ -124,24 +132,64 @@ at fixed biome, a fresh probe still reads technology at 0.95–0.98 even for coe
    chance, the lowest-variance "removable" directions the adversary finds are partly the biology ones,
    so the gradient erodes biome first.
 
-This is a **robust, reportable negative**: the M2 technology-leak survives an adversarial fix; the
-fix trades away biology faster than technology. Honest next steps (NOT run here): a **stronger
-discriminator** (k updates/step), **distribution alignment** (MMD/CORAL) which doesn't rely on a
-min-max race, or **conditional alignment within biome**; and scVI-style *conditioning* (feed technology
-to a decoder so the latent need not encode it). Reference batch-correction methods (Harmony/scVI) remain
-the domain standard to compare against.
+The M2 technology-leak survives the *adversarial* fix; DANN trades away biology faster than technology.
+That motivated a second method family that doesn't rely on a min-max race — see CORAL below.
+
+## Result 2 — deterministic alignment (CORAL) — MEASURED (jobs 77650 train / 77777 eval; 3 seeds)
+Same setup, but the invariance term is **CORAL** (align the per-technology latent **mean + covariance**;
+`loss.invariance_method=coral`) — no adversary, single knob. Fresh linear probe, mean ± s.e.
+Figure: [results/tech_tradeoff_coral.png](results/tech_tradeoff_coral.png). Data:
+[results/tech_sweep_coral_results.json](results/tech_sweep_coral_results.json).
+
+| | TECH bal-acc (↓ better) | BIOME bal-acc (keep) | |
+|---|---|---|---|
+| **VICReg** c0 | 0.960 ± 0.000 | 0.837 ± 0.004 | baseline |
+| VICReg c10 | 0.912 ± 0.007 | 0.819 ± 0.010 | |
+| VICReg c100 | 0.870 ± 0.005 | 0.788 ± 0.011 | |
+| VICReg c1000 | **0.847 ± 0.003** | 0.772 ± 0.007 | −0.113 tech / −0.065 biome |
+| **SIGReg** c0 | 0.934 ± 0.002 | 0.770 ± 0.003 | baseline |
+| SIGReg c10 | 0.916 ± 0.003 | 0.767 ± 0.010 | |
+| SIGReg c100 | 0.883 ± 0.002 | 0.765 ± 0.006 | |
+| SIGReg c1000 | **0.844 ± 0.003** | **0.768 ± 0.003** | **−0.090 tech / −0.002 biome** |
+
+### Verdict 2 — CORAL is a real (partial) fix; it succeeds where DANN failed
+- **CORAL removes technology that DANN could not, and keeps biology.** The tradeoff now runs the *right*
+  way: tech bal-acc drops monotonically with coeff while biome is largely held. **SIGReg+CORAL is the
+  sweet spot** — technology 0.934 → **0.844** (−0.090) at **flat biome** (0.770 → 0.768, within s.e.):
+  it scrubs ~9 points of protocol signal at **≈zero cost to biology**. VICReg+CORAL also improves
+  (−0.113 tech for −0.065 biome) — a ~1.7:1 favourable ratio, vs DANN's ~0.3:1 (wrong-way) ratio.
+- **But the fix is PARTIAL, two honest limits:** (1) linear tech bal-acc bottoms at ~0.84 — **still well
+  above the 0.69 confounding floor and chance 0.50**, so technology is *reduced*, not *eliminated*;
+  (2) a **nonlinear MLP probe barely moves** (tech-MLP stays ~0.96 across all coeffs). CORAL aligns only
+  the first two moments, so it removes the **linearly-accessible** nuisance; a nonlinear probe still
+  finds the residual. Full invariance would need higher-order alignment (RBF-MMD — implemented as
+  `invariance_method=mmd`, not swept here) or conditioning.
+
+### Why CORAL works and DANN doesn't (the JEPA lesson)
+A deterministic moment-matching loss applies a **stable, well-posed gradient every step**, so it
+actually moves the per-technology marginals together; the adversarial GRL instead plays a min-max game
+that the encoder "wins" by fooling a one-step discriminator **without removing the information** (its
+training accuracy fell below chance). For a *dominant, linearly-accessible* nuisance like sequencing
+protocol, alignment >> adversarial. This is the rubric-relevant finding.
 
 ### Honest limitations
-- One SIGReg point is n=5 (one `bcs c1.0` seed failed to train); 59/60 checkpoints. Everything else n=6.
+- **DANN sweep:** one SIGReg point is n=5 (one `bcs c1.0` seed failed to train); 59/60 checkpoints.
+  Everything else n=6. **CORAL sweep:** 24/24 checkpoints, n=3 seeds per point.
 - The eval is on n=4960 (tech) / 4062 (biome) balanced corpus samples; biome is 8-class, imbalanced
   (gut-dominated), hence balanced-accuracy is the headline.
-- The negative is specific to **this** DANN configuration (single GRL adversary, this schedule); it does
-  not prove invariance is impossible — only that the cheap adversarial route fails on a dominant nuisance.
+- **CORAL gives only *linear* invariance** (1st+2nd moment alignment): linear tech-probe drops to ~0.84
+  but a nonlinear MLP probe still recovers technology (~0.96), and tech never reaches the 0.69 floor.
+  So the protocol nuisance is *reduced*, not removed. Higher-order alignment (RBF-MMD, coded but not
+  swept) or conditioning would be needed for full invariance; Harmony/scVI remain the domain-standard
+  references to compare against.
+- The DANN negative is specific to a single GRL adversary at this schedule; a stronger k-step
+  discriminator might do better. We did not tune it further because CORAL already gave the cleaner fix.
 
 ## Reproduce
 - Confounding: `sbatch examples/microbiome_jepa/run_tech_confounding.sh`
-- Train sweep: `NGPU=<=3 sbatch examples/microbiome_jepa/run_tech_sweep.sh` (shared gres/gpu=3 cap)
-- Eval (fast, parallel CPU): `sbatch examples/microbiome_jepa/run_tech_eval_batch.sh`
+- DANN train sweep: `NGPU=<=3 sbatch examples/microbiome_jepa/run_tech_sweep.sh` (shared gres/gpu=3 cap)
+- CORAL train sweep: `METHOD=coral CKPT_ROOT=checkpoints/microbiome_jepa/tech_sweep_coral COEFFS=0,10,100,1000 NGPU=<=3 sbatch examples/microbiome_jepa/run_tech_sweep.sh`
+- Eval (fast, parallel CPU): `sbatch examples/microbiome_jepa/run_tech_eval_batch.sh` (point `--ckpt_root/--out_root` at the coral pool for CORAL)
 - Tradeoff figure: `python -m examples.microbiome_jepa.plot_tech_tradeoff --sweep_json <...>/sweep_results.json --confounding_json <...>/confounding.json`
 - Qualitative latents: `python -m examples.microbiome_jepa.plot_latent_umap --layout {compare,tech_split,tech_within_biome} --from_reps <reps.npz>`
 - coeff=0 bit-exactness: `main.py` with `loss.invariance_coeff=0` ≡ baseline (verified).
