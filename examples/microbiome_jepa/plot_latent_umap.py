@@ -112,8 +112,7 @@ def _plot_tech_split(reps, strat_s, biome_s, biomes, bcolors, method, out):
         for c, tech in enumerate(["amplicon", "wgs"]):
             ax = axes[r][c]
             sel = strat_s == tech
-            # faint full background so the shared frame is visible in both panels
-            ax.scatter(XY[:, 0], XY[:, 1], s=4, c="0.88", linewidths=0, zorder=0)
+            # only the colored biome points (shared frame kept via fixed xlim/ylim below)
             for b in biomes:
                 m = sel & (biome_s == b)
                 if m.any():
