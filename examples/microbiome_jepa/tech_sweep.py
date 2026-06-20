@@ -111,6 +111,7 @@ def run(
     ckpt_root: str = None,
     out_root: str = None,
     skip_train: bool = False,   # only re-run eval on existing checkpoints
+    skip_eval: bool = False,    # only train (GPU job); run eval separately on CPU to free GPUs
 ):
     work = os.environ.get("WORK", ".")
     data_dir = data_dir or os.path.join(os.environ.get("EBJEPA_DSETS", "."), "susagi", "data")
@@ -150,6 +151,11 @@ def run(
                 running.pop(gpu)
                 free_gpus.append(gpu)
             time.sleep(5)
+
+    if skip_eval:
+        print("[sweep] skip_eval -> training only; run eval separately (CPU) with --skip_train.",
+              flush=True)
+        return None
 
     # ---- Phase 2: frozen-probe eval (CPU) for every run ----
     results = []

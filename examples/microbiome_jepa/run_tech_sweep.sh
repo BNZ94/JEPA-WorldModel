@@ -28,8 +28,10 @@ COEFFS=${COEFFS:-0,0.3,1.0,3.0}
 SEEDS=${SEEDS:-0,1,2}
 EP=${EP:-30}; NS=${NS:-16000}; DM=${DM:-128}; NGPU=${NGPU:-3}
 
+# TRAIN ONLY (GPU): eval runs separately on CPU (run_tech_eval.sh) so GPUs are released
+# during the CPU probe phase — friendlier to the shared gres/gpu=3 cap.
 $PY -m examples.microbiome_jepa.tech_sweep \
   --losses $LOSSES --coeffs $COEFFS --seeds $SEEDS \
   --n_gpus $NGPU --epochs $EP --ns $NS --d_model $DM \
-  --data_dir $DATA --per_class_cap ${CAP:-2500}
-echo "MB_TECHSWEEP_DONE"
+  --data_dir $DATA --per_class_cap ${CAP:-2500} --skip_eval true
+echo "MB_TECHSWEEP_TRAIN_DONE"
