@@ -1,0 +1,56 @@
+{
+  "n_samples": 5000,
+  "strategy_counts": {
+    "amplicon": 2500,
+    "wgs": 2500
+  },
+  "confounding": {
+    "n_with_both": 4102,
+    "crosstab_strat_x_biome": {
+      "amplicon": {
+        "feces": 123,
+        "gut": 696,
+        "oral": 10,
+        "plant": 148,
+        "skin": 13,
+        "soil": 295,
+        "stool": 1,
+        "water": 619
+      },
+      "wgs": {
+        "feces": 190,
+        "gut": 1473,
+        "oral": 0,
+        "plant": 6,
+        "skin": 138,
+        "soil": 98,
+        "stool": 0,
+        "water": 292
+      }
+    },
+    "nmi_tech_biome": 0.09545563191878492,
+    "predict_biome_from_tech": {
+      "acc_mean": 0.5287665250586733,
+      "acc_se": 0.00023016699613778315,
+      "balanced_acc_mean": 0.1392857142857143,
+      "balanced_acc_se": 0.0035714285714285696,
+      "chance": 0.5287664553876158,
+      "balanced_chance": 0.125,
+      "n": 4102,
+      "n_classes": 8,
+      "probe_kind": "linear"
+    },
+    "predict_tech_from_biome": {
+      "acc_mean": 0.7006304031371616,
+      "acc_se": 0.007831966645730853,
+      "balanced_acc_mean": 0.6915087420217638,
+      "balanced_acc_se": 0.00824982258170542,
+      "chance": 0.5355923939541687,
+      "balanced_chance": 0.5,
+      "n": 4102,
+      "n_classes": 2,
+      "probe_kind": "linear"
+    },
+    "note": "NMI\u22480 and both directional probes\u2248chance => tech and biome are separable, invariance is well-posed. High NMI / high directional acc => confounded, so perfect tech-invariance is IMPOSSIBLE without losing biome (the ceiling)."
+  }
+}
