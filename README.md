@@ -16,12 +16,13 @@
 </p>
 
 <p align="center">
-  <img src="paper/figures/metric_hybrid.png" width="62%"
-       alt="Planning closes from 0% to 100% once the latent is given a metric">
+  <img src="paper/figures/metric_hybrid_sweep.png" width="56%"
+       alt="Once the latent carries a metric, planning succeeds and the cost is rollout, not geometry">
   <br>
-  <sub><i>Planning a community toward a target attractor. A pure-JEPA latent is faithful for
-  one-step prediction yet is <b>not a metric space</b> (latent MPPI = 0%); a single isometry
-  auxiliary turns planning <b>0% → 100%</b> at oracle quality.</i></sub>
+  <sub><i>Once the latent is given a metric (isometry auxiliary), raw-latent MPPI planning
+  succeeds and the latent-vs-true rank correlation saturates at <b>~0.99</b> (vs. +0.08 for pure
+  JEPA). Raising the metric weight trades a little forecasting accuracy (rollout error grows) for
+  metric quality — <code>metric_coeff=0.3</code> is the sweet spot.</i></sub>
 </p>
 
 ---
